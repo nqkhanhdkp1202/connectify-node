@@ -57,24 +57,29 @@ exports.register = async (req, res) => {
         res.status(401).json("Registration failed. Invalid nickname.")
       }
       const user = await User?.findOne({
-        userName: username
+        username: username
       })
     }
     else {
-      const user = await User?.findOne({
-        userName: username
+      let user = await User?.findOne({
+        username: username
       })
       if (user) {
         res.status(401).json("User already registered")
       }
+      user = await User?.findOne({
+        email:email
+      })
+      if (user) {
+        res.status(401).json("Email already registered")
+      }
       else {
         const encryptedPass = CryptoJS.AES.encrypt(password, process.env.PASSWORD_SECRET_KEY);
         const newUser = await User?.create({
-          userName: username,
+          username: username,
           password: encryptedPass,
-          phoneNumber: phoneNumber,
           fullName: fullname,
-          address: address,
+          email: email
         })
 
         const token = jwt.sign(
