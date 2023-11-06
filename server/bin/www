@@ -10,7 +10,7 @@ const http = require("http");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const { error } = require("console");
-const seedAdmin = require('../src/seeds/seedAdmin')
+// const seedAdmin = require('../src/seeds/seedAdmin')
 
 dotenv.config();
 
@@ -38,7 +38,6 @@ mongoose
     server.on("error", onError);
     server.on("listening", onListening);
     console.log("MongoDB connected");
-    seedAdmin.createAdmin();
   })
   .catch((error) => {
     console.log(error);
