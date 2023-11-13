@@ -1,0 +1,15 @@
+@import url('https://fonts.cdnfonts.com/css/instrument-sans');
+
+* {
+    margin: 0;
+    font-family: 'Instrument Sans', sans-serif;
+}
+
+.app {
+    background-color: #f1f2f5;
+}
+
+.app__body {
+    display: flex;
+    margin-top: 24px;
+}

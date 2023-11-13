@@ -6,10 +6,11 @@ import ChatIcon from "@material-ui/icons/Chat";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
 import ExpandMoreOutlined from "@material-ui/icons/ExpandMoreOutlined";
+import './index.css'
 
 const SidebarRow = ({ src, Icon, title }) => {
     return (
-        <Box >
+        <Box className='sidebarRow'>
             {src && <Avatar src={src} />}
             {Icon && <Icon />}
             <h4>{title}</h4>
@@ -20,7 +21,7 @@ const SidebarRow = ({ src, Icon, title }) => {
 
 const Sidebar = () => {
     return (
-        <Box>
+        <Box className='sidebar'>
             <SidebarRow Icon={LocalHospitalIcon} title='COVID-19 Information Center' />
             <SidebarRow Icon={EmojiFlagsIcon} title="Pages" />
             <SidebarRow Icon={ChatIcon} title="Messenger" />
