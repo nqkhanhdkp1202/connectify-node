@@ -22,4 +22,6 @@
 
 .sidebar {
     padding: 25px 10px;
+    position: fixed;
+
 }

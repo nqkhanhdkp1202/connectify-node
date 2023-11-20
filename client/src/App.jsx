@@ -1,17 +1,16 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Login from './pages/Auth/Login'
 import MainLayout from './layouts/MainLayout'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Register from './pages/Auth/Register';
 import Home from './pages/Home';
+import { useEffect, useState } from 'react';
 
 function App() {
 
-  const token = localStorage.getItem('token');
-
   return (
-    <BrowserRouter>
+    <>
       <ToastContainer position="top-center"
         autoClose={3000}
         hideProgressBar={true}
@@ -22,14 +21,15 @@ function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route
-            path="/"
+            path={"/"}
             element={<Home />}
           />
         </Route>
         <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
+        <Route path='/register' element={<Register />} />.
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-    </BrowserRouter>
+    </>
   )
 }
 

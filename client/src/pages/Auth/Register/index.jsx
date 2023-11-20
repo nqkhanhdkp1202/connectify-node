@@ -40,7 +40,6 @@ function Register() {
                     if (response?.status === 200 || response?.status === 201) {
                         localStorage.setItem("token", response?.data?.data?.token);
                         toast.success("Register successfully!");
-                        navigate('/');
                     }
                 } catch (error) {
                     console.log(error);
@@ -51,9 +50,9 @@ function Register() {
     }
 
     return (
-        <MDBContainer className="py-5 gradient-form">
+        <MDBContainer style={{ display:"flex", flexDirection:"row",alignItems: "center", justifyContent:"center" }} className="py-5 gradient-form">
 
-            <MDBRow style={{ alignItems: "center" }}>
+            <MDBRow>
 
                 <MDBCol col='6' className="mb-5">
                     <div className="d-flex flex-column ms-5">
@@ -75,7 +74,7 @@ function Register() {
                             <button style={{ border: "none", outline: "none", padding: "12px 4px", borderRadius: "4px", color: "white" }} onClick={handleRegister} className="mb-4 w-100 gradient-custom-2">Register</button>
                         </div>
 
-                        <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
+                        <div className="d-flex flex-row align-items-center justify-content-center">
                             <p className="mb-0 me-1">Have an account?</p>
                             <Link to="/login" children={"Login"} />
                         </div>
@@ -85,7 +84,7 @@ function Register() {
                 </MDBCol>
 
                 <MDBCol col='6' className="mb-5">
-                    <div style={{ minHeight: "500px", maxHeight: "500px" }} className="d-flex flex-column  justify-content-center gradient-custom-2 h-100 mb-4">
+                    <div className="d-flex flex-column  justify-content-center gradient-custom-2 h-100 mb-4">
                         <div className="text-white px-3 py-4 p-md-5 mx-md-4">
                             <h4 className="mb-4">We are more than just a company</h4>
                             <p className="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

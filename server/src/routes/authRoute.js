@@ -4,9 +4,9 @@ const tokenHandler = require('../handlers/tokenHandler');
 
 router.post("/login", authController.login);
 router.post("/register", authController.register);
-router.post("/update-profile", authController.updateProfile);
+router.post("/update-profile", tokenHandler.verifyToken, authController.updateProfile);
 
-router.post("/check-token", tokenHandler.verifyAdminToken, (req, res) => {
+router.post("/check-token", tokenHandler.verifyToken, (req, res) => {
   res.status(200).json("Authorized");
 });
 

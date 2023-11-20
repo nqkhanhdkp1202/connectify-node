@@ -16,12 +16,21 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import FeedbackIcon from '@material-ui/icons/Feedback';
 import './index.css'
 import LogoHomePage from '../../assets/images/logo.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Image6 from '../../assets/images/image6.jpeg';
+import { toast } from 'react-toastify';
 
 
 const Header = () => {
     const [openDropdown, setOpenDropdown] = useState(false);
+    const navigate = useNavigate();
+    function handleLogout(e) {
+        e.preventDefault()
+        localStorage.removeItem('token');
+        toast.success("You have been successfully logged out!")
+        navigate('/login');
+    }
+
     return (
         <div className="header">
             <div className="header__left">
@@ -87,7 +96,7 @@ const Header = () => {
                         </div>
                         <div className='mt-2 mb-2' style={{ display: "block", width: "100%", height: "1px", background: "rgba(0, 0,0, 0.12)" }}></div>
                         <div style={{ width: "100%" }}>
-                            <div className='menu-item' style={{ padding: "12px", borderRadius: "8px", cursor: "pointer  ", display: "flex", alignItems: "center" }}>
+                            <div onClick={handleLogout} className='menu-item' style={{ padding: "12px", borderRadius: "8px", cursor: "pointer  ", display: "flex", alignItems: "center" }}>
                                 <MeetingRoomIcon className='me-2' />
                                 Log out
                             </div>

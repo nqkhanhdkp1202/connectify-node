@@ -108,9 +108,25 @@ exports.register = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   try {
-    const { email, fullname, phoneNumber, address } = req?.body;
-    const newUser = await User?.updateOne({});
+    const { username, email, fullName } = req?.body;
+    const newUser = await User.updateOne(
+      { username: username },
+      {
+        $set: {
+          email: email,
+          fullName: fullName
+        }
+      }
+    );
+
+    if (!newUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (newUser.modifiedCount > 0) {
+      return res.status(200).json({ message: 'Profile updated successfully' });
+    }
   } catch (error) {
     console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
