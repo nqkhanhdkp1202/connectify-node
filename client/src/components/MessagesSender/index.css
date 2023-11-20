@@ -16,13 +16,14 @@
     flex: 1;
     display: flex;
 }
-.messageSender__top > form > input {
+.messageSender__top > form > textarea {
     outline-width: 0;
     border: none;
     padding: 5px 20px;
     margin: 0 10px;
-    border-radius: 999px;
+    border-radius: 12px;
     background-color: #eff2f5;
+    resize: none;
 }
 .messageSender__top > form > button {
     display: none;

@@ -9,9 +9,10 @@ exports.login = async (req, res) => {
       return res.status(400).json("Please enter your username and password");
     }
     const user = await User?.findOne({
-      userName: username,
+      username: username,
     });
-    if (!user) res.status(400).json("Login failed. User not found.");
+    if (!user) return res.status(400).json("Login failed. User not found.");
+
     const decryptedPass = CryptoJS.AES.decrypt(
       user.password,
       process.env.PASSWORD_SECRET_KEY
@@ -35,9 +36,7 @@ exports.login = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({
-      message: error,
-    });
+    console.log(error);
   }
 };
 

@@ -1,14 +1,17 @@
 .sidebarRow {
+    flex: 0.5;
     display: flex;
     align-items: center;
     padding: 10px;
     cursor: pointer;
+    min-width: 280px;
 }
 .sidebarRow:hover {
     background-color: lightgray;
     border-radius: 10px;
 }
 .sidebarRow > h4 {
+    font-size: 16px;
     margin-left: 20px;
     font-weight: 600;
 }
@@ -19,5 +22,4 @@
 
 .sidebar {
     padding: 25px 10px;
-    width: 360px;
 }

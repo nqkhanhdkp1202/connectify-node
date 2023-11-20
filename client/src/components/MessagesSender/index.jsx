@@ -27,7 +27,7 @@ const MessageSender = () => {
         <Avatar  />
         <form>
           {/* <input value={input} onChange={(e) => setInput(e.target.value)} className="messageSender__input" placeholder={`What's on your mind, ${user.displayName} ?`} /> */}
-          <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="Image URL (Optional)" />
+          <textarea style={{width: "100%", padding:"12px"}} value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="Image URL (Optional)" />
           <button onClick={handleSubmit} type="submit">
             Submit Post
           </button>

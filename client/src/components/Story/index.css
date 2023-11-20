@@ -23,6 +23,7 @@
     bottom: 12px;
     left: 10px;
     color: white;
+    font-size: 12px;
 }
 .story > .story__avatar {
     position: absolute;
