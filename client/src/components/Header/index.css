@@ -19,6 +19,7 @@
 .header__left-logo {
   width: 100%;
   height: auto;
+  padding: 32px;
 }
 
 .header__left-logo > img {
@@ -93,4 +94,11 @@
 .menu-item:hover {
     background-color: lightgray;
     transition: .3s ease;
+}
+
+
+@media (max-width: 1024px) {
+  .header__middle {
+      display: none;
+  }
 }

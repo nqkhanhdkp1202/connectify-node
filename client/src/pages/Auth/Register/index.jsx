@@ -1,18 +1,15 @@
-import React, { useRef, useState } from 'react';
 import {
-    MDBBtn,
-    MDBContainer,
-    MDBRow,
     MDBCol,
-    MDBInput
-}
-    from 'mdb-react-ui-kit';
-import LogoHomePage from '../../../assets/images/logo.png'
-import { Link } from 'react-router-dom';
-import './index.css'
-import { toast } from "react-toastify"
+    MDBContainer,
+    MDBInput,
+    MDBRow
+} from 'mdb-react-ui-kit';
+import React, { useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+import LogoHomePage from '../../../assets/images/logo.png';
 import authServices from '../../../service/authServices';
-import {useNavigate} from "react-router-dom"
+import './index.css';
 
 function Register() {
     const usernameInput = useRef(null);
@@ -39,7 +36,8 @@ function Register() {
                     let response = await authServices.register({ username: username, password: password, email: email, fullname: fullname });
                     if (response?.status === 200 || response?.status === 201) {
                         localStorage.setItem("token", response?.data?.data?.token);
-                        toast.success("Register successfully!");
+                        toast.success("Register successfully! Please login");
+                        navigate("/login")
                     }
                 } catch (error) {
                     console.log(error);
