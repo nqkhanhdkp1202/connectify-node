@@ -32,6 +32,15 @@ const Sidebar = () => {
             <SidebarRow Icon={FavoriteIcon} title="Dating" />
             <SidebarRow Icon={ApartmentIcon} title="Business Account" />
             <SidebarRow Icon={ExpandMoreOutlined} title="See More" />
+            <hr />
+            <SidebarRow Icon={LocalHospitalIcon} title='COVID-19 Information' />
+            <SidebarRow Icon={EmojiFlagsIcon} title="Pages" />
+            <SidebarRow Icon={ChatIcon} title="Messenger" />
+            <SidebarRow Icon={StorefrontIcon} title="Marketplace" />
+            <SidebarRow Icon={VideoLibraryIcon} title="Videos" />
+            <SidebarRow Icon={FavoriteIcon} title="Dating" />
+            <SidebarRow Icon={ApartmentIcon} title="Business Account" />
+            <SidebarRow Icon={ExpandMoreOutlined} title="See More" />
         </Box>
     )
 }

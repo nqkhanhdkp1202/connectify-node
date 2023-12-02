@@ -13,6 +13,7 @@ import DefaultUser from "../../assets/images/default-user.png";
 import LogoHomePage from "../../assets/images/logo.png";
 import { useAuth } from "../../store/AuthContext";
 import { useDialog } from "../../store/DialogContext";
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import "./index.css";
 
 const Header = () => {
@@ -62,10 +63,13 @@ const Header = () => {
           {/* <Avatar src={user.photoURL} /> */}
           {/* <h4>{user.displayName}</h4> */}
         </div>
-        <div className="header__info">
+        <div style={{backgroundColor:"#3333", padding:"8px", marginRight:"8px", borderRadius:"50%", cursor:"pointer"}}>
+          <MoreHorizIcon />
+        </div>
+        <div style={{padding:"8px",borderRadius:"50%",backgroundColor:"#3333", marginRight:"8px",cursor:"pointer"}}>
           <ForumIcon />
         </div>
-        <div className="header__info">
+        <div style={{padding:"8px",borderRadius:"50%",backgroundColor:"#3333",cursor:"pointer"}}>
           <NotificationsActiveIcon />
         </div>
         <IconButton

@@ -1,4 +1,6 @@
 .storyReel {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
     max-width: 100%;
+    overflow: 'scroll';
 }
