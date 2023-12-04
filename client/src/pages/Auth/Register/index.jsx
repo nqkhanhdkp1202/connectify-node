@@ -1,15 +1,11 @@
-import {
-    MDBCol,
-    MDBContainer,
-    MDBInput,
-    MDBRow
-} from 'mdb-react-ui-kit';
+
 import React, { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import LogoHomePage from '../../../assets/images/logo.png';
 import authServices from '../../../service/authServices';
-import './index.css';
+import {Box, Typography, FormControl} from "@mui/material"
+import ButtonRoot from '../../../components/ButtonRoot';
 
 function Register() {
     const usernameInput = useRef(null);
@@ -45,59 +41,52 @@ function Register() {
                 }
             }
         }
+        else{
+            toast.error("Oops! Something went wrong")
+        }
     }
 
     return (
-        <MDBContainer style={{ display:"flex", flexDirection:"row",alignItems: "center", justifyContent:"center" }} className="py-5 gradient-form">
-
-            <MDBRow>
-
-                <MDBCol col='6' className="mb-5">
-                    <div className="d-flex flex-column ms-5">
-
-                        <div className="text-center">
-                            <img src={LogoHomePage} alt='Logo' style={{ width: "184px" }} />
-                            <h4 className="mt-1 mb-5 pb-1">Register your account</h4>
-                        </div>
-
-                        <form onSubmit={handleRegister}>
-                            <MDBInput ref={usernameInput} wrapperClass='mb-4' label='Username' id='form1' type='username' />
-                            <MDBInput ref={passwordInput} wrapperClass='mb-4' label='Password' id='form2' type='password' />
-                            <MDBInput ref={emailInput} wrapperClass='mb-4' label='Email' id='form2' type='email' />
-                            <MDBInput ref={fullnameInput} wrapperClass='mb-4' label='Fullname' id='form2' type='text' />
-                        </form>
-
-
-                        <div className="text-center pt-1 mb-4 pb-1">
-                            <button style={{ border: "none", outline: "none", padding: "12px 4px", borderRadius: "4px", color: "white" }} onClick={handleRegister} className="mb-4 w-100 gradient-custom-2">Register</button>
-                        </div>
-
-                        <div className="d-flex flex-row align-items-center justify-content-center">
-                            <p className="mb-0 me-1">Have an account?</p>
-                            <Link to="/login" children={"Login"} />
-                        </div>
-
-                    </div>
-
-                </MDBCol>
-
-                <MDBCol col='6' className="mb-5">
-                    <div className="d-flex flex-column  justify-content-center gradient-custom-2 h-100 mb-4">
-                        <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-                            <h4 className="mb-4">We are more than just a company</h4>
-                            <p className="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            </p>
-                        </div>
-
-                    </div>
-
-                </MDBCol>
-
-            </MDBRow>
-
-        </MDBContainer>
+    <Box component={"div"} sx={{ backgroundImage: `url("https://source.unsplash.com/random/1920x1080/?city,night")`, width: "100vw", height: "100vh" }}>
+      <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", textAlign: "center", backgroundColor: "rgba(255,255,255,0.8)", padding: "36px", borderRadius: "16px" }}>
+        <Typography variant="h2" sx={{ fontSize: "42px", fontWeight: "800", letterSpacing: "2px" }}>connectify</Typography>
+        <Typography variant="caption" sx={{ fontSize: "24px", fontWeight: "500" }}>Mạng xã hội với hơn 1 triệu lượt truy cập mỗi ngày</Typography>
+        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: 'center', alignItems: "center", gap:"24px" }}>
+          <Box sx={{ marginTop: "24px" }}>
+            <Typography variant="body1" sx={{ fontSize: "16px", fontWeight: "800" }}>Đăng nhập tài khoản connectify</Typography>
+          </Box>
+          <Box sx={{ width: "60%" }}>
+            <FormControl sx={{ width: "100%",backgroundColor:"#f5f5f5", border:"2px solid rgba(0,0,0,0.2)", padding:"12px", borderRadius:"16px" }}>
+              <input style={{border:"none",outline:"none",backgroundColor:"#f5f5f5",}} ref={usernameInput} placeholder="Tên người dùng"/>
+            </FormControl>
+          </Box>
+          <Box sx={{ width: "60%" }}>
+            <FormControl sx={{ width: "100%", backgroundColor:"#f5f5f5", border:"2px solid rgba(0,0,0,0.2)",padding:"12px",borderRadius:"16px" }}>
+              <input style={{border:"none",outline:"none",backgroundColor:"#f5f5f5",}}  type="password" ref={passwordInput} placeholder="Mật khẩu"/>
+            </FormControl>
+          </Box>
+          <Box sx={{ width: "60%" }}>
+            <FormControl sx={{ width: "100%", backgroundColor:"#f5f5f5", border:"2px solid rgba(0,0,0,0.2)",padding:"12px",borderRadius:"16px" }}>
+              <input style={{border:"none",outline:"none",backgroundColor:"#f5f5f5",}}  type="email" ref={emailInput} placeholder="Email"/>
+            </FormControl>
+          </Box>
+          <Box sx={{ width: "60%" }}>
+            <FormControl sx={{ width: "100%", backgroundColor:"#f5f5f5", border:"2px solid rgba(0,0,0,0.2)",padding:"12px",borderRadius:"16px" }}>
+              <input style={{border:"none",outline:"none",backgroundColor:"#f5f5f5",}}  type="text" ref={fullnameInput} placeholder="Họ và tên"/>
+            </FormControl>
+          </Box>
+          <Box sx={{ width: "60%" }}>
+            <ButtonRoot text={"Đăng ký"} onClick={() => handleRegister()} />
+          </Box>
+          <Box>
+            <Typography>Bạn đã có tài khoản ?</Typography>
+          </Box>
+          <Box sx={{ width: "60%" }}>
+          <ButtonRoot bgColor="white" textColor="black" style={{border:"2px solid  rgba(0,0,0,0.2)"}} text={"Đăng nhập"} onClick={() => navigate("/login")} />
+          </Box>
+        </Box>
+      </Box>
+    </Box>
     );
 }
 

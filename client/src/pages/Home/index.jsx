@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Post from "../../components/Feed/Post";
-import MessageSender from "../../components/MessagesSender";
-import StoryReel from "../../components/StoryReel";
-import UpdateProfileDialog from "../../components/UpdateProfile";
 import feedServices from "../../service/feedServices";
-import "./index.css";
+import { Box,Container } from "@mui/material"
+import ContainerWrapper from "../../components/ContainerWrapper";
+import Post from "../../components/Post";
+import PostCreate from "../../components/PostCreate";
 
 const Home = () => {
   const [listPosts, setListPosts] = useState([]);
@@ -531,21 +530,10 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="feed">
-      <StoryReel />
-      <MessageSender />
-      {posts.map((post) => (
-        <Post
-          key={post.id}
-          profilePic={null}
-          message={post?.body}
-          timestamp={undefined}
-          username={post?.name}
-          image={null}
-        />
-      ))}
-      <UpdateProfileDialog />
-    </div>
+    < >
+      <PostCreate/>
+      <Post/>
+    </>
   );
 };
 

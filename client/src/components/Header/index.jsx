@@ -1,192 +1,59 @@
-import { Avatar, IconButton } from "@material-ui/core";
-import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
-import FeedbackIcon from "@material-ui/icons/Feedback";
-import ForumIcon from "@material-ui/icons/Forum";
-import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
-import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
-import SearchIcon from "@material-ui/icons/Search";
-import SettingsIcon from "@material-ui/icons/Settings";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import DefaultUser from "../../assets/images/default-user.png";
-import LogoHomePage from "../../assets/images/logo.png";
-import { useAuth } from "../../store/AuthContext";
-import { useDialog } from "../../store/DialogContext";
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import "./index.css";
+import React from 'react'
+import { Box } from "@mui/material"
+import Logo from "../../assets/images/logo.png"
+import Grid from '@mui/material/Unstable_Grid2';
+import CottageOutlinedIcon from '@mui/icons-material/CottageOutlined';
+import CottageIcon from '@mui/icons-material/Cottage';
+import SearchIcon from '@mui/icons-material/Search';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import SegmentOutlinedIcon from '@mui/icons-material/SegmentOutlined';
+import PersonIcon from '@mui/icons-material/Person';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import { useLocation, useNavigate } from "react-router-dom"
 
 const Header = () => {
-  const { token, userInfo, logout } = useAuth();
-  const { updateDialog, openDialog, closeDialog } = useDialog();
+    const { pathname } = useLocation();
+    const navigate = useNavigate();
+    return (
+        <Grid container spacing={3} className="header" sx={{ padding: "12px 120px", display: "flex", alignItems: "center" }}>
+            <Grid xs>
+                <Box component={"img"} src={Logo} sx={{ width: "50%", height: "auto" }}></Box>
+            </Grid>
+            <Grid xs={6} sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px" }}>
+                <Box onClick={() => navigate("/")} sx={{ padding: "16px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
+                    {
+                        pathname === "/" ? <CottageIcon sx={{ fontSize: "32px", color: "black" }} /> : <CottageOutlinedIcon sx={{ fontSize: "32px", color: "#999" }} />
+                    }
+                </Box >
+                <Box onClick={() => navigate("/search")} sx={{ padding: "16px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
+                    {
+                        pathname.includes("/search") ? <SearchIcon sx={{ fontSize: "32px", color: "black" }} /> : <SearchIcon sx={{ fontSize: "32px", color: "#999" }} />
+                    }
+                </Box>
+                <Box sx={{ padding: "16px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
+                    <EditNoteIcon sx={{ fontSize: "32px", color: "#999" }} />
+                </Box>
+                <Box onClick={() => navigate("/activity")} sx={{ padding: "16px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
+                    {
+                        pathname.includes("/activity") ? <NotificationsActiveIcon sx={{ fontSize: "32px", color: "black" }} /> : <NotificationsActiveOutlinedIcon sx={{ fontSize: "32px", color: "#999" }} />
+                    }
+                </Box>
+                <Box onClick={() => navigate("/profile")} sx={{ padding: "16px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
+                    {
+                        pathname.includes("/profile") ? <PersonIcon sx={{ fontSize: "32px", color: "black" }} /> : <PersonOutlineOutlinedIcon sx={{ fontSize: "32px", color: "#999" }} />
+                    }
 
-  const [openDropdown, setOpenDropdown] = useState(false);
-  const navigate = useNavigate();
-  function handleLogout(e) {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    toast.success("You have been successfully logged out!");
-    navigate("/login");
-  }
+                </Box>
+            </Grid>
+            <Grid xs sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+                <Box>
+                    <SegmentOutlinedIcon sx={{ fontSize: "32px", color: "#999" }} />
+                </Box>
+            </Grid>
+        </Grid>
+    )
+}
 
-  return (
-    <div className="header">
-      <div className="header__left">
-        <Link className="header__left-logo" to="/">
-          <img src={LogoHomePage} alt="Logo" />
-        </Link>
-      </div>
-
-      <div className="header__middle">
-        {/* <div className='header__option header__option--active'>
-                    <HomeIcon fontSize='large' />
-                </div>
-                <div className='header__option'>
-                    <FlagIcon fontSize='large' />
-                </div>
-                <div className='header__option'>
-                    <SubscriptionsOutlinedIcon fontSize='large' />
-                </div>
-                <div className='header__option'>
-                    <StorefrontOutlinedIcon fontSize='large' />
-                </div>
-                <div className='header__option'>
-                    <SupervisedUserCircleIcon fontSize='large' />
-                </div> */}
-        <div className="header__input">
-          <SearchIcon />
-          <input placeholder="Search in connectify" type="text" />
-        </div>
-      </div>
-      <div className="header__right" style={{ position: "relative" }}>
-        <div className="header__info">
-          {/* <Avatar src={user.photoURL} /> */}
-          {/* <h4>{user.displayName}</h4> */}
-        </div>
-        <div style={{backgroundColor:"#3333", padding:"8px", marginRight:"8px", borderRadius:"50%", cursor:"pointer"}}>
-          <MoreHorizIcon />
-        </div>
-        <div style={{padding:"8px",borderRadius:"50%",backgroundColor:"#3333", marginRight:"8px",cursor:"pointer"}}>
-          <ForumIcon />
-        </div>
-        <div style={{padding:"8px",borderRadius:"50%",backgroundColor:"#3333",cursor:"pointer"}}>
-          <NotificationsActiveIcon />
-        </div>
-        <IconButton
-          onClick={() => setOpenDropdown(!openDropdown)}
-          disableRipple
-          disableTouchRipple
-        >
-          <Avatar src={DefaultUser} style={{ border: "2px solid #55a138" }} />
-        </IconButton>
-        {openDropdown ? (
-          <div
-            style={{
-              width: "260px",
-              height: "max-content",
-              position: "absolute",
-              background: "white",
-              top: "54px",
-              right: "0",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              padding: "20px",
-              borderRadius: "8px",
-              boxShadow: "0px 5px 7px -7px rgba(0, 0,0, 0.75)",
-              border: "solid 1px rgba(0,0,0,0.12)",
-            }}
-          >
-            <div className="avatar mb-4 mt-2">
-              <Avatar src={DefaultUser} />
-            </div>
-            <h4 className="name mb-3">{userInfo?.fullName}</h4>
-            <div
-              className="mt-2 mb-2"
-              style={{
-                display: "block",
-                width: "100%",
-                height: "1px",
-                background: "rgba(0, 0,0, 0.12)",
-              }}
-            ></div>
-            <div style={{ width: "100%" }}>
-              <div
-                className="menu-item"
-                style={{
-                  padding: "12px",
-                  borderRadius: "8px",
-                  cursor: "pointer  ",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-                onClick={() => {
-                  setOpenDropdown(false);
-                  openDialog();
-                }}
-              >
-                <AssignmentIndIcon className="me-2" />
-                User Info
-              </div>
-              <div
-                className="menu-item"
-                style={{
-                  padding: "12px",
-                  borderRadius: "8px",
-                  cursor: "pointer  ",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <SettingsIcon className="me-2" />
-                Setting
-              </div>
-              <div
-                className="menu-item"
-                style={{
-                  padding: "12px",
-                  borderRadius: "8px",
-                  cursor: "pointer  ",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <FeedbackIcon className="me-2" />
-                Feedback
-              </div>
-            </div>
-            <div
-              className="mt-2 mb-2"
-              style={{
-                display: "block",
-                width: "100%",
-                height: "1px",
-                background: "rgba(0, 0,0, 0.12)",
-              }}
-            ></div>
-            <div style={{ width: "100%" }}>
-              <div
-                onClick={handleLogout}
-                className="menu-item"
-                style={{
-                  padding: "12px",
-                  borderRadius: "8px",
-                  cursor: "pointer  ",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <MeetingRoomIcon className="me-2" />
-                Log out
-              </div>
-            </div>
-          </div>
-        ) : (
-          <></>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default Header;
+export default Header

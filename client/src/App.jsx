@@ -9,6 +9,9 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./store/AuthContext";
 import { DialogProvider } from "./store/DialogContext";
+import Search from "./pages/Search";
+import Activity from "./pages/Activity";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -25,12 +28,15 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<PrivateRouteComponent children={<MainLayout />} />}
+            element={<MainLayout />}
           >
             <Route
               index
-              element={<PrivateRouteComponent children={<Home />} />}
+              element={<Home />}
             />
+            <Route path="/search" element={<Search />} />
+            <Route path="/activity" element={<Activity />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
