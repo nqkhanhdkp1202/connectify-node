@@ -533,6 +533,11 @@ const Home = () => {
     < >
       <PostCreate/>
       <Post/>
+      <Post/>
+      <Post/>
+      <Post/>
+      <Post/>
+      <Post/>
     </>
   );
 };
