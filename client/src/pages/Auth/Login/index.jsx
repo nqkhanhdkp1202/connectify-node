@@ -1,11 +1,10 @@
+import { Box, FormControl, Typography } from "@mui/material";
 import React, { useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import LogoHomePage from "../../../assets/images/logo.png";
-import authServices from "../../../service/authServices";
-import { useAuth } from "../../../store/AuthContext";
-import { Box, Typography, FormControl, Input } from "@mui/material"
 import ButtonRoot from "../../../components/ButtonRoot";
+import authServices from "../../../service/authServices";
+import { useAuth } from "../../../store/context/AuthContext";
 
 function Login() {
   const usernameInput = useRef(null);

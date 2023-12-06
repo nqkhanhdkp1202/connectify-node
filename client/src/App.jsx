@@ -1,17 +1,16 @@
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { PrivateRouteComponent } from "./components/PrivateRouteComponent";
 import MainLayout from "./layouts/MainLayout";
+import Activity from "./pages/Activity";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
-import { AuthProvider } from "./store/AuthContext";
-import { DialogProvider } from "./store/DialogContext";
-import Search from "./pages/Search";
-import Activity from "./pages/Activity";
 import Profile from "./pages/Profile";
+import Search from "./pages/Search";
+import { AuthProvider } from "./store/context/AuthContext";
+import { DialogProvider } from "./store/context/DialogContext";
 
 function App() {
   return (
