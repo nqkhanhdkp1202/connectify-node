@@ -17,7 +17,7 @@ const Post = ({ author, post }) => {
   return (
     <Box className="post-item" sx={{ display: "flex", minHeight: "100px", width: "100%", padding: "12px 0px", borderBottom:"1px solid rgba(0,0,0,0.1)"}}>
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "10%" }}>
-        <Box component={"img"} src={author?.userAvatar} sx={{ backgroundColor: "red", width: "36px", height: "36px", borderRadius: "50%", marginBottom: "8px" }}></Box>
+        <Box component={"img"} src={Image1} sx={{ backgroundColor: "red", width: "36px", height: "36px", borderRadius: "50%", marginBottom: "8px" }}></Box>
         <Box sx={{ backgroundColor: "#f3f3f3", width: "2px", height: "85%" }}></Box>
       </Box>
       <Box sx={{ width: "90%" }}>

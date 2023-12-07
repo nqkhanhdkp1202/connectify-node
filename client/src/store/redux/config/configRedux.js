@@ -28,30 +28,7 @@ import walletReducer from "../reducers/walletReducer";
 import rootSaga from "../sagas";
 import sagaMiddleware from "./configSaga";
 let rootReducer = combineReducers({
-  alertReducer,
-  authReducer,
-  profileReducer,
-  chatReducer,
-  walletReducer,
-  gameReducer,
-  paymentReducer,
-  appReducer,
-  loadingReducer,
-  luckyWheelReducer,
-  roomReducer,
-  tournamentReducer,
-  toastReducer,
-  stripeReducer,
-  helpcenterReducer,
-  deviceReducer,
-  videoReducer,
-  playgameReducer,
-  userReducer,
-  refreshReducer,
-  packageReducer,
-  payPalReducer,
-  promotionReducer,
-  settingReducer
+  appReducer
 });
 
 const persistConfig = {

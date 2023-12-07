@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { Box } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 import Logo from "../../assets/images/logo.png"
-import Grid from '@mui/material/Unstable_Grid2';
 import CottageOutlinedIcon from '@mui/icons-material/CottageOutlined';
 import CottageIcon from '@mui/icons-material/Cottage';
 import SearchIcon from '@mui/icons-material/Search';
@@ -17,6 +16,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { styled, alpha } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
+import {useDispatch}  from "react-redux"
+import { openCreateDialog } from '../../store/redux/reducers/appReducer';
 
 const Header = () => {
     const { pathname } = useLocation();
@@ -67,17 +68,18 @@ const Header = () => {
         },
       }));
 
+      const dispatch = useDispatch();
+
+      const handleOpenDialog = () => {
+        dispatch(openCreateDialog());
+      }
+
     return (
-        <Grid container spacing={3} className="header" sx={{ height: "80px", padding: "12px 120px", display: "flex", alignItems: "center", position: "fixed", top: 0, left: 0, right: 0, backgroundColor: "white", zIndex: 900 }}>
+        <Grid container spacing={3} className="header" sx={{ height: "80px", padding: "12px 240px", display: "flex", alignItems: "center", position: "fixed", top: 0, left: 0, right: 0, backgroundColor: "rgba(255,255,255,0.9)", zIndex: 900 }}>
             <Grid xs sx={{ padding: "0px" }}>
                 <Box component={"img"} src={Logo} sx={{ width: "50%", height: "auto" }}></Box>
             </Grid>
             <Grid xs={6} sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", padding: "0px" }}>
-                {
-                    pathname !== "/" && <Box onClick={() => navigate("/")} sx={{ padding: "16px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
-                        <ArrowBackOutlinedIcon sx={{ fontSize: "32px", color: "black" }} />
-                    </Box >
-                }
                 <Box onClick={() => navigate("/")} sx={{ padding: "16px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
                     {
                         pathname === "/" ? <CottageIcon sx={{ fontSize: "32px", color: "black" }} /> : <CottageOutlinedIcon sx={{ fontSize: "32px", color: "#999" }} />
@@ -88,7 +90,7 @@ const Header = () => {
                         pathname.includes("/search") ? <SearchIcon sx={{ fontSize: "32px", color: "black" }} /> : <SearchIcon sx={{ fontSize: "32px", color: "#999" }} />
                     }
                 </Box>
-                <Box sx={{ padding: "16px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
+                <Box onClick={handleOpenDialog} sx={{ padding: "16px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
                     <EditNoteIcon sx={{ fontSize: "32px", color: "#999" }} />
                 </Box>
                 <Box onClick={() => navigate("/activity")} sx={{ padding: "16px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>

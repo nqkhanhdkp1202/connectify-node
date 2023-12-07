@@ -11,38 +11,42 @@ import Profile from "./pages/Profile";
 import Search from "./pages/Search";
 import { AuthProvider } from "./store/context/AuthContext";
 import { DialogProvider } from "./store/context/DialogContext";
+import { Provider } from 'react-redux'
+import { store } from "./store/redux/config/configRedux";
 
 function App() {
   return (
-    <AuthProvider>
-      <DialogProvider>
-        <ToastContainer
-          position="top-center"
-          autoClose={3000}
-          hideProgressBar={true}
-          closeOnClick
-          rtl={false}
-          theme="light"
-        />
-        <Routes>
-          <Route
-            path="/"
-            element={<MainLayout />}
-          >
+    <Provider store={store}>
+      <AuthProvider>
+        <DialogProvider>
+          <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            hideProgressBar={true}
+            closeOnClick
+            rtl={false}
+            theme="light"
+          />
+          <Routes>
             <Route
-              index
-              element={<Home />}
-            />
-            <Route path="/search" element={<Search />} />
-            <Route path="/activity" element={<Activity />} />
-            <Route path="/profile" element={<Profile />} />
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </DialogProvider>
-    </AuthProvider>
+              path="/"
+              element={<MainLayout />}
+            >
+              <Route
+                index
+                element={<Home />}
+              />
+              <Route path="/search" element={<Search />} />
+              <Route path="/activity" element={<Activity />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </DialogProvider>
+      </AuthProvider>
+    </Provider>
   );
 }
 
