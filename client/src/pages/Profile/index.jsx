@@ -2,6 +2,9 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 import Image from "../../assets/images/image1.jpg"
 import ButtonRoot from '../../components/ButtonRoot'
+import {useDispatch} from "react-redux"
+import { openEditDialog, openUserDialog } from '../../store/redux/reducers/appReducer'
+import Post from '../../components/Post'
 
 const Profile = () => {
   const profile = {
@@ -41,6 +44,16 @@ const Profile = () => {
       }
     ]
   }
+  const dispatch = useDispatch();
+  const handleOpenListUserDialog = () => {
+    dispatch(openUserDialog());
+  }
+
+  const handleOpenEditDialog = () => {
+    dispatch(openEditDialog());
+  }
+
+
   return (
     <Box sx={{ padding: "16px 0" }}>
       <Box className="profile">
@@ -63,19 +76,21 @@ const Profile = () => {
                 ))
               }
             </Box>
-            <Typography sx={{ fontSize: "15px", fontWeight: "300", color: "#999", cursor:"pointer" ,":hover": { textDecoration: "underline" } }}>{profile?.listFriends?.length} người bạn</Typography>
+            <Typography onClick={handleOpenListUserDialog} sx={{ fontSize: "15px", fontWeight: "300", color: "#999", cursor:"pointer" ,":hover": { textDecoration: "underline" } }}>{profile?.listFriends?.length} người bạn</Typography>
           </Box>
         </Box>
       </Box>
       <Box className="profile-edit" sx={{height:"58px",padding:"12px 0", marginTop:"16px"}}>
-        <ButtonRoot text={"Chỉnh sửa trang cá nhân"} style={{height:"100%", fontSize:"15px", textTransform:"unset", padding:"0px", border:"1px solid rgba(0,0,0,0.15)", borderRadius:"10px"}} textColor='black' bgColor='white'></ButtonRoot>
+        <ButtonRoot onClick={handleOpenEditDialog} text={"Chỉnh sửa trang cá nhân"} style={{height:"100%", fontSize:"15px", textTransform:"unset", padding:"0px", border:"1px solid rgba(0,0,0,0.15)", borderRadius:"10px"}} textColor='black' bgColor='white'></ButtonRoot>
       </Box>
       <Box className="list=post" sx={{display:"flex", flexDirection:"column", marginTop:"24px"}}>
         <Box sx={{display:"flex", alignItems:"center"}}>
           <Typography sx={{fontSize:"16px", fontWeight:"800", marginRight:"16px"}}>Danh sách bài viết</Typography>
           <hr style={{width:"70%", height:"2px", backgroundColor:"rgba(0,0,0,0.15)"}}/>
         </Box>
-        <Box></Box>
+        <Box>
+          <Post />
+        </Box>
       </Box>
     </Box>
   )

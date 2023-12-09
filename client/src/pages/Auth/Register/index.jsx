@@ -76,13 +76,13 @@ function Register() {
             </FormControl>
           </Box>
           <Box sx={{ width: "60%" }}>
-            <ButtonRoot text={"Đăng ký"} onClick={() => handleRegister()} />
+            <ButtonRoot style={{padding:"16px"}} text={"Đăng ký"} onClick={() => handleRegister()} />
           </Box>
           <Box>
             <Typography>Bạn đã có tài khoản ?</Typography>
           </Box>
           <Box sx={{ width: "60%" }}>
-          <ButtonRoot bgColor="white" textColor="black" style={{border:"2px solid  rgba(0,0,0,0.2)"}} text={"Đăng nhập"} onClick={() => navigate("/login")} />
+          <ButtonRoot bgColor="white" textColor="black" style={{border:"2px solid rgba(0,0,0,0.2)", padding:"16px"}} text={"Đăng nhập"} onClick={() => navigate("/login")} />
           </Box>
         </Box>
       </Box>

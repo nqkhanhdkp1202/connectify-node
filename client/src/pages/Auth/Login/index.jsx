@@ -68,7 +68,7 @@ function Login() {
             </FormControl>
           </Box>
           <Box sx={{ width: "60%" }}>
-            <ButtonRoot text={"Đăng nhập"} onClick={() => handleLogin()} />
+            <ButtonRoot style={{ padding:"16px"}} text={"Đăng nhập"} onClick={() => handleLogin()} />
           </Box>
           <Box>
             <Typography>Bạn quên mật khẩu ư ?</Typography>
@@ -79,7 +79,7 @@ function Login() {
             <hr style={{ width: "72px", height: "2px" }} />
           </Box >
           <Box sx={{ width: "60%" }}>
-          <ButtonRoot bgColor="white" textColor="black" style={{border:"2px solid  rgba(0,0,0,0.2)"}} text={"Đăng ký"} onClick={() => navigate("/register")} />
+          <ButtonRoot bgColor="white" textColor="black" style={{border:"2px solid rgba(0,0,0,0.2)", padding:"16px"}} text={"Đăng ký"} onClick={() => navigate("/register")} />
           </Box>
         </Box>
       </Box>

@@ -12,7 +12,7 @@ const PostCreate = () => {
         dispatch(openCreateDialog());
     }
     return (
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px", borderBottom: "2px solid #f2f2f2" }}>
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "24px 12px", borderBottom: "1px solid rgba(0,0,0,0.1)" }}>
             <Box sx={{ width: "32px", height: "32px", borderRadius: "50%", overflow: "hidden" }}>
                 <Box component={"img"} src={Avatar} sx={{ width: "100%", height: "100%" }} />
             </Box>

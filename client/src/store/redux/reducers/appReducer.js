@@ -14,9 +14,39 @@ export const closeCreateDialog = (data) => {
   }
 }
 
+export const openUserDialog = (data) => {
+  return {
+    type: "OPEN_USER_DIALOG",
+    payload: data,
+  }
+}
+
+export const closeUserDialog = (data) => {
+  return {
+    type: "CLOSE_USER_DIALOG",
+    payload: data,
+  }
+}
+
+export const openEditDialog = (data) => {
+  return {
+    type: "OPEN_EDIT_DIALOG",
+    payload: data,
+  }
+}
+
+export const closeEditDialog = (data) => {
+  return {
+    type: "CLOSE_EDIT_DIALOG",
+    payload: data,
+  }
+}
+
 const appReducer = (
   state = {
-    isOpenCreateDialog: false
+    isOpenCreateDialog: false,
+    isOpenUserDialog: false,
+    isOpenEditDialog: false
   },
   action
 ) => {
@@ -36,6 +66,30 @@ const appReducer = (
       return {
         ...state,
         isOpenCreateDialog: false,
+      }
+    }
+        case "OPEN_USER_DIALOG": {
+      return {
+        ...state,
+        isOpenUserDialog: true,
+      }
+    }
+    case "CLOSE_USER_DIALOG": {
+      return {
+        ...state,
+        isOpenUserDialog: false,
+      }
+    }
+    case "OPEN_EDIT_DIALOG": {
+      return {
+        ...state,
+        isOpenEditDialog: true,
+      }
+    }
+    case "CLOSE_EDIT_DIALOG": {
+      return {
+        ...state,
+        isOpenEditDialog: false,
       }
     }
     default:
