@@ -46,7 +46,6 @@ function App() {
           />
           <Routes>
             <Route
-              path="/"
               element={<PrivateRouteComponent children={<MainLayout />} />}
             >
               <Route

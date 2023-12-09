@@ -1,9 +1,9 @@
-import { PROMOTION_API } from "../axios/api";
+import { API } from "../axios/api";
 
 class UserService {
   async login(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/login",
+    const res = await API.post(
+      "/auth/signIn",
       dataRequest,
       {
         headers: {
@@ -15,8 +15,8 @@ class UserService {
   }
 
   async register(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/register",
+    const res = await API.post(
+      "/auth/signUp",
       dataRequest,
       {
         headers: {
@@ -27,71 +27,14 @@ class UserService {
     return res;
   }
 
-  async verifyOtp(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/verify-otp",
+  async changePassword(dataRequest) {
+    const res = await API.post(
+      "/auth/changePassword",
       dataRequest,
       {
         headers: {
           "Content-Type": "application/json",
-        },
-      }
-    );
-    return res;
-  }
-
-  async forgetPassword(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/forgot-password",
-      dataRequest,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return res;
-  }
-
-  async updateNewPassword(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/update-new-password",
-      dataRequest,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return res;
-  }
-
-  async resendOtp(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/resend-otp",
-      dataRequest,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return res;
-  }
-
-  async updateProfile(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/update-profile",
-      {
-        ...dataRequest,
-        token: localStorage.getItem("token")
-      },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "x-access-refactor-token": localStorage.getItem("token"),
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
         },
       }
     );
@@ -99,12 +42,9 @@ class UserService {
   }
 
   async userInfo(dataRequest) {
-    const res = await PROMOTION_API.get("/api/authenticate/me", {
+    const res = await API.get("/end-user/me", {
       headers: {
-        "Content-Type": "application/json",
-        "x-access-refactor-token": dataRequest || localStorage.getItem("token"),
-        Authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
-        authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     return res;
@@ -114,70 +54,12 @@ class UserService {
     return true;
   }
 
-  async verifyPhone(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/verify-phone",
+  async editProfile(dataRequest) {
+    const res = await API.post(
+      "/end-user/edit-profile",
       dataRequest
     );
     return res;
-  }
-
-  async verifyEmail(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/verify-email",
-      dataRequest
-    );
-    return res;
-  }
-
-  async reVerifyAccount(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/re-verify",
-      dataRequest,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-refactor-token": localStorage.getItem("token"),
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        }
-      },
-    );
-    return res;
-  }
-
-  async getUserByUsername(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/get-user-info-by-username",
-      dataRequest,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        }
-      },
-    );
-    return res;
-  }
-
-  async getMyInfo(dataRequest) {
-    const res = await PROMOTION_API.post(
-      "/api/authenticate/get-my-info",
-      dataRequest,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-refactor-token": dataRequest || localStorage.getItem("token"),
-          Authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
-          authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
-        }
-      },
-    );
-    return res;
-  }
-
-  async getCityAndStateProfile(dataRequest) {
-    const res = await PROMOTION_API.get("/api/get-cities-and-states/us")
-    return res
   }
 
 }

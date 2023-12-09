@@ -6,7 +6,7 @@ import ButtonRoot from '../ButtonRoot'
 const ListUser = ({ listData }) => {
     const User = ({ avatar, username, fullname }) => {
         return (<Box sx={{ display: "flex", padding: "12px 0px" }}>
-            <Box component={"img"} src={avatar ? avatar : DefaultUser} sx={{ width: "36px", height: "36px", borderRadius: "50%", outline: "1px solid rgba(0,0,0,0.1)", cursor: "pointer", marginRight: "12px" }}></Box>
+            <Box component={"img"} src={avatar ? avatar : DefaultUser} sx={{ width: "36px", height: "36px", borderRadius: "50%", outline: "1px solid rgba(0,0,0,0.1)", cursor: "pointer", marginRight: "12px",objectFit:"cover"  }}></Box>
             <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
                 <Box sx={{ display: "flex", border: "1px solid rbga(0,0,0,0.1)", justifyContent: "space-between", width: "100%" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", width: "400%" }}>

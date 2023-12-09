@@ -18,12 +18,14 @@ import { styled, alpha } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import { useDispatch } from "react-redux"
 import { openCreateDialog } from '../../store/redux/reducers/appReducer';
+import { logoutReady } from '../../store/redux/reducers/userReducer';
 
 const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const openDropdown = Boolean(anchorEl);
+  const dispatch = useDispatch();
   const handleClose = () => {
     setAnchorEl(null);
   }
@@ -31,6 +33,11 @@ const Header = () => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleLogout = () => {
+    dispatch(logoutReady());
+    navigate("/login")
+  }
 
   const StyledMenu = styled((props) => (
     <Menu
@@ -68,8 +75,6 @@ const Header = () => {
     },
   }));
 
-  const dispatch = useDispatch();
-
   const handleOpenDialog = () => {
     dispatch(openCreateDialog());
   }
@@ -78,7 +83,7 @@ const Header = () => {
     <Box component={"div"} spacing={3} className="header" sx={{ height: "80px", padding: "6px 120px", display: "flex", alignItems: "center", position: "fixed", top: 0, left: 0, right: 0, backgroundColor: "rgba(255,255,255,0.9)", zIndex: 900 }}>
       <Grid item xs sx={{ padding: "0px" }}>
         <Link to={"/"}>
-          <Box component={"img"} src={Logo} sx={{ width: "50%", height: "auto" }}></Box>
+          <Box component={"img"} src={Logo} sx={{ width: "50%", height: "auto",objectFit:"cover"  }}></Box>
         </Link>
       </Grid>
       <Grid item xs={6} sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", padding: "0px" }}>
@@ -136,7 +141,7 @@ const Header = () => {
             <Divider sx={{ my: 0.5 }} />
             <MenuItem onClick={handleClose}>Báo cáo sự cố</MenuItem>
             <Divider sx={{ my: 0.5 }} />
-            <MenuItem onClick={handleClose}>Đăng xuất</MenuItem>
+            <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
           </StyledMenu>
         </Box>
       </Grid>

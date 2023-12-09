@@ -1,30 +1,18 @@
 import axios from "axios";
 import { store } from "../config/configRedux";
 import { showToastNotification } from "../reducers/alertReducer";
-import { logoutReady, updateUserToken } from "../reducers/userReducer";
+import { logoutReady } from "../reducers/userReducer";
 
 axios.defaults.withCredentials = true;
 axios.defaults.xsrfHeaderName = "X-XSRF-TOKEN";
 
 export const API = axios.create({
-  baseURL: process.env.REACT_APP_PROMOTION_URL,
-  timeout: process.env.REACT_APP_REQUEST_TIMEOUT || 10000,
+  baseURL: "http://localhost:8080",
   headers: {
-    "Content-Type": "multipart/form-data",
-    Authorization: "Bearer " + localStorage.getItem("token"),
-    authorization: "Bearer " + localStorage.getItem("token"),
-    "x-access-refactor-token": localStorage.getItem("token"),
-    'x-time-zone': - new Date().getTimezoneOffset()/60,
-    'Cache-Control': 'no-cache',
-    'Pragma': 'no-cache',
-    'Expires': '0',
+    "Content-Type": "application/json",
   },
 });
 
-PROMOTION_API.interceptors.request.use((config) => {
-  config.timeout = process.env.REACT_APP_REQUEST_TIMEOUT || 10000;
-  return config;
-});
 
 (function () {
   let authToken = localStorage.getItem("token");
@@ -35,7 +23,7 @@ PROMOTION_API.interceptors.request.use((config) => {
   }
 })();
 
-PROMOTION_API.interceptors.response.use(
+API.interceptors.response.use(
   function (response) {
     return response;
   },

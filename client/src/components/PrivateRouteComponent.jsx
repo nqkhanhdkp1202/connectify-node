@@ -1,14 +1,15 @@
+import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 
 export { PrivateRouteComponent };
 
 function PrivateRouteComponent(props) {
     const token = localStorage.getItem("token")
-    const auth = token ? true : false;
+    console.log(token);
     const { children } = props
     return (
         <>
-            {auth ? children : <Navigate to={{ pathname: '/login', state: { from: props.location } }} />}
+            {token !== null ? children : <Navigate to={{ pathname: '/login'}} />}
         </>
     );
 }

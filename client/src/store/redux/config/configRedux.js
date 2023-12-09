@@ -28,7 +28,8 @@ import walletReducer from "../reducers/walletReducer";
 import rootSaga from "../sagas";
 import sagaMiddleware from "./configSaga";
 let rootReducer = combineReducers({
-  appReducer
+  appReducer,
+  userReducer
 });
 
 const persistConfig = {
