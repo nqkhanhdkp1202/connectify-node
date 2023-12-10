@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import PostService from "../services/postService";
 import { createPostFail, createPostSuccess, getListPostFail, getListPostSuccess } from "../reducers/postReducer";
+import { toast } from 'react-toastify';
 const postService = new PostService();
 
 function* getListPost(dataRequest) {
@@ -13,7 +14,7 @@ function* getListPost(dataRequest) {
       yield put(getListPostFail());
     }
   } catch (error) {
-    console.log(error);
+    toast.error(error);
     yield put(getListPostFail());
   }
 }
@@ -24,11 +25,13 @@ function* createPostSaga(dataRequest) {
     const res = yield call(postService.createPost, payload);
     if (res.status === 200) {
       yield put(createPostSuccess(res?.data));
+      toast.success("Thêm bài viết thành công");
+      window.location.reload();
     } else {
       yield put(createPostFail());
     }
   } catch (error) {
-    console.log(error);
+    toast.error(error);
     yield put(createPostFail());
   }
 }

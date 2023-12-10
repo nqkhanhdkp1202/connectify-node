@@ -17,7 +17,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 
-const Post = ({ author, content , title, imagesUrl, likedBy, comments, createdAt }) => {
+const Post = ({ author, content , title, imageUrls, likedBy, comments, createdAt }) => {
   const dispatch = useDispatch();
   const handleOpenListUserDialog = () => {
     dispatch(openUserDialog());
@@ -85,7 +85,15 @@ const Post = ({ author, content , title, imagesUrl, likedBy, comments, createdAt
         </Box>
         <Box sx={{ margin: "12px 0px" }}>
           {
-            imagesUrl?.length > 1 ? <Carousel listImage={imagesUrl} /> : <Box component={"img"}></Box>
+            imageUrls?.length > 2 ? <Carousel listImage={imageUrls} /> : <Box>
+              {
+                imageUrls?.map((e,i) => {
+                  return (
+                    <Box key={i} component={"img"} src={e} sx={{maxWidth:"40%"}}></Box>
+                  )
+                })
+              }
+            </Box>
           }
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: "16px", marginTop: "20px" }}>

@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <>
       <PostCreate />
-      <ListPost listPost={listPost} />
+      <ListPost listPost={listPost?.reverse()} />
     </>
   );
 };

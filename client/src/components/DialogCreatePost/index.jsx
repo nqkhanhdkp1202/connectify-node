@@ -10,6 +10,13 @@ import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAuto
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 import { createPostReady } from '../../store/redux/reducers/postReducer';
+import { ref } from 'firebase/storage';
+import { uploadBytesResumable } from 'firebase/storage';
+import { toast } from 'react-toastify';
+import { getDownloadURL } from 'firebase/storage';
+import { storage } from '../../store/firebase/firebase';
+import Carousel from '../Carousel/index';
+import ImageRoot from '../ImageRoot/index';
 
 const TextareaAutosize = styled(BaseTextareaAutosize)(
     ({ theme }) => `
@@ -50,6 +57,8 @@ const DialogCreatePost = ({ children }) => {
     const [content, setContent] = useState('');
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState(null);
+    const [percent, setPercent] = useState(0);
+
     const handleClose = () => {
         dispatch(closeCreateDialog());
     };
@@ -58,32 +67,94 @@ const DialogCreatePost = ({ children }) => {
     }
 
     const handleChangeFile = (e) => {
-        const selectedFile = e.target.files[0];
-        if (selectedFile) {
-            // Check if file size is greater than 2MB
-            const fileSize = selectedFile.size / 1024 / 1024; // in MB
-            if (fileSize > 2) {
-                toast.error('File size exceeds 2MB. Please choose a smaller file.');
-                setImage(null);
-            } else {
-                setImage(selectedFile);
-                // Read the file and set the preview
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setPreview(reader.result);
-                };
-                reader.readAsDataURL(selectedFile);
+        const selectedFiles = e.target.files;
+    
+        if (selectedFiles.length > 0) {
+            // Check each file's size
+            for (const file of selectedFiles) {
+                const fileSize = file.size / 1024 / 1024; // in MB
+    
+                if (fileSize > 2) {
+                    toast.error('File size exceeds 2MB. Please choose smaller files.');
+                    setImage(null);
+                    return; // Stop processing if any file is too large
+                }
             }
+    
+            // Set the images array
+            const imageArray = Array.from(selectedFiles);
+            setImage(imageArray);
+    
+            // Read and set the preview for each file
+            const promises = imageArray.map((file) => {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        resolve(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+    
+            Promise.all(promises).then((results) => {
+                setPreview(results);
+            });
         }
     };
 
-    const handleSubmit = () => {
-        dispatch(createPostReady({
-            title:"This is title",
-            content: content,
-            imageUrls: [image?.name],
-        }))
-    }
+    const handleSubmit = async () => {
+        const submitData = {
+            title:"Sample Title",
+            content:"",
+            imageUrls:[],
+        };
+        try {
+            if (image !== null) {
+                const imageRef = ref(storage, `/avatar/${image.name}`);
+                const uploadTask = uploadBytesResumable(imageRef, image);
+
+                uploadTask?.on(
+                    "state_changed",
+                    (snapshot) => {
+                        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                        setPercent(progress);
+                    },
+                    (error) => {
+                        console.error("Upload Error:", error);
+                        toast.error(error.message || "An error occurred during upload");
+                    },
+                    async () => {
+                        try {
+                            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                            setTimeout(() => {
+                                if (content) {
+                                    submitData.content = content;
+                                }
+                                console.log(downloadURL);
+                                if (downloadURL) {
+                                    submitData.imageUrls = [downloadURL];
+                                }
+                                dispatch(createPostReady(submitData));
+                            }, 5000)
+                        } catch (error) {
+                            console.error("Download URL Error:", error);
+                            toast.error("Error retrieving download URL");
+                        }
+                    }
+                );
+            }
+            else {
+
+                if (content) {
+                    submitData.content = content;
+                }
+                dispatch(createPostReady(submitData));
+            }
+        } catch (error) {
+            console.error("Handle Submit Error:", error);
+            toast.error("An error occurred during form submission");
+        }
+    };
 
     return createPortal(
         <React.Fragment>
@@ -102,12 +173,19 @@ const DialogCreatePost = ({ children }) => {
                             <Typography sx={{ fontSize: "16px", fontWeight: "700", color: "black" }}>{user?.fullName}</Typography>
                             <Box sx={{ position: "relative", cursor: "pointer" }}>
                                 <AddPhotoAlternateOutlinedIcon sx={{ fontSize: "24px", color: "#999", cursor: "pointer", marginTop: "16px" }} />
-                                <input onChange={handleChangeFile} type="file" style={{ position: "absolute", top: "10px", left: 0, right: 0, opacity: 0 }} /></Box>
+                                <input multiple onChange={handleChangeFile} type="file" style={{ position: "absolute", top: "10px", left: 0, right: 0, opacity: 0 }} /></Box>
                             <TextareaAutosize onChange={handleChangeContent} placeholder='Hãy bắt đầu viết gì đó...' sx={{ marginTop: "16px", width: "100%" }} />
                             <Box sx={{ margin: "12px 0px" }}>
                                 {
-                                    image?.length > 2 ? <Carousel listImage={[]} /> : <Box component={"img"} src={preview} sx={{maxWidth:"30%"}}></Box>
-                                }
+                                    preview?.length > 2 ? <Carousel listImage={preview} /> : <Box sx={{display:"flex", alignItems:"center"}}>
+                                    {
+                                      preview?.map((e,i) => {
+                                        return (
+                                          <ImageRoot key={i} image={e} style={{maxWidth:"30%"}}></ImageRoot>
+                                        )
+                                      })
+                                    }
+                                  </Box> }
                             </Box>
                         </Box>
                     </Box>

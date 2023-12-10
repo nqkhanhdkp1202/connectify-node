@@ -155,7 +155,7 @@ const DialogEditProfile = ({ children }) => {
                     </Box>
                     <Box sx={{ width: "48%", marginTop: "24px", borderBottom: "1px solid rgba(0,0,0,0.1)" }}>
                         <Typography>Địa chỉ</Typography>
-                        <InputBase sx={{ color: "#999" }} value={address} onChange={handleChangeAddress}></InputBase>
+                        <InputBase sx={{ color: "black" }} value={address} onChange={handleChangeAddress}></InputBase>
                     </Box>
                     </Box>
                     <Box sx={{ width: "100%", marginTop: "24px", padding: "6px 0px", borderBottom: "1px solid rgba(0,0,0,0.1)" }}>
