@@ -17,6 +17,7 @@ import { getDownloadURL } from 'firebase/storage';
 import { storage } from '../../store/firebase/firebase';
 import Carousel from '../Carousel/index';
 import ImageRoot from '../ImageRoot/index';
+import DefaultUser from "../../assets/images/default-user.png"
 
 const TextareaAutosize = styled(BaseTextareaAutosize)(
     ({ theme }) => `
@@ -68,7 +69,6 @@ const DialogCreatePost = ({ children }) => {
 
     const handleChangeFile = (e) => {
         const selectedFiles = e.target.files;
-    
         if (selectedFiles.length > 0) {
             // Check each file's size
             for (const file of selectedFiles) {
@@ -102,6 +102,7 @@ const DialogCreatePost = ({ children }) => {
         }
     };
 
+    
     const handleSubmit = async () => {
         const submitData = {
             title:"Sample Title",
@@ -110,38 +111,9 @@ const DialogCreatePost = ({ children }) => {
         };
         try {
             if (image !== null) {
-                const imageRef = ref(storage, `/avatar/${image.name}`);
-                const uploadTask = uploadBytesResumable(imageRef, image);
-
-                uploadTask?.on(
-                    "state_changed",
-                    (snapshot) => {
-                        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                        setPercent(progress);
-                    },
-                    (error) => {
-                        console.error("Upload Error:", error);
-                        toast.error(error.message || "An error occurred during upload");
-                    },
-                    async () => {
-                        try {
-                            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                            setTimeout(() => {
-                                if (content) {
-                                    submitData.content = content;
-                                }
-                                console.log(downloadURL);
-                                if (downloadURL) {
-                                    submitData.imageUrls = [downloadURL];
-                                }
-                                dispatch(createPostReady(submitData));
-                            }, 5000)
-                        } catch (error) {
-                            console.error("Download URL Error:", error);
-                            toast.error("Error retrieving download URL");
-                        }
-                    }
-                );
+            for(const file of image){
+                console.log(file);
+            }
             }
             else {
 

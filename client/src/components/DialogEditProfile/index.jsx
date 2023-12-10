@@ -28,7 +28,8 @@ const DialogEditProfile = ({ children }) => {
 
     useEffect(() => {
         setBio(user?.bio);
-        setFullName(user?.fullName)
+        setFullName(user?.fullName);
+        setAddress(user?.address)
     }, [user])
 
     const handleChangeFile = (e) => {
