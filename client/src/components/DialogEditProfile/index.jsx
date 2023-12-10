@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { createPortal } from 'react-dom';
 import { Box, Dialog, Typography, InputBase } from '@mui/material';
 import { useSelector, useDispatch } from "react-redux"
-import { closeCreateDialog, closeEditDialog } from '../../store/redux/reducers/appReducer';
+import { closeCreateDialog, closeEditDialog, closeLoadDialog, openLoadDialog } from '../../store/redux/reducers/appReducer';
 import useWindowDimensions from '../../utils/useWindowDimensions';
 import DefaultUser from '../../assets/images/default-user.png'
 import ButtonRoot from '../ButtonRoot';
@@ -66,6 +66,7 @@ const DialogEditProfile = ({ children }) => {
     }
 
     const handleSubmit = async () => {
+        dispatch(openLoadDialog());
         const submitData = {};
         try {
             if (image !== null) {
@@ -104,9 +105,11 @@ const DialogEditProfile = ({ children }) => {
                                 dispatch(editProfileReady(submitData));
                                 setImage(null);
                             }, 2000)
+                            dispatch(closeLoadDialog());
                         } catch (error) {
                             console.error("Download URL Error:", error);
                             toast.error("Error retrieving download URL");
+                            dispatch(closeLoadDialog());
                         }
                     }
                 );
@@ -125,10 +128,12 @@ const DialogEditProfile = ({ children }) => {
                 }
                 submitData.avatarUrl = user?.avatarUrl;
                 dispatch(editProfileReady(submitData));
+                dispatch(closeLoadDialog());
             }
         } catch (error) {
             console.error("Handle Submit Error:", error);
             toast.error("An error occurred during form submission");
+            dispatch(closeLoadDialog());
         }
     };
 
@@ -148,16 +153,16 @@ const DialogEditProfile = ({ children }) => {
                         </ButtonRoot>
                         <input id="avatar" name="avatar" accept="image/png, image/jpeg, gif" onChange={handleChangeFile} type="file" style={{ position: "absolute", top: 0, left: 0, right: 0, opacity: 0, cursor: "pointer" }} />
                     </Box>
-                    <Box sx={{display:"flex", justifyContent:"space-between", width:"100%"}}>
-                    <Box sx={{ width: "48%", marginTop: "24px", borderBottom: "1px solid rgba(0,0,0,0.1)" }}>
-                        <Typography>Tên</Typography>
-                        <LockOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px" }} />
-                        <InputBase sx={{ color: "#999" }} readOnly value={user?.fullName}></InputBase>
-                    </Box>
-                    <Box sx={{ width: "48%", marginTop: "24px", borderBottom: "1px solid rgba(0,0,0,0.1)" }}>
-                        <Typography>Địa chỉ</Typography>
-                        <InputBase sx={{ color: "black" }} value={address} onChange={handleChangeAddress}></InputBase>
-                    </Box>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+                        <Box sx={{ width: "48%", marginTop: "24px", borderBottom: "1px solid rgba(0,0,0,0.1)" }}>
+                            <Typography>Tên</Typography>
+                            <LockOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px" }} />
+                            <InputBase sx={{ color: "#999" }} readOnly value={user?.fullName}></InputBase>
+                        </Box>
+                        <Box sx={{ width: "48%", marginTop: "24px", borderBottom: "1px solid rgba(0,0,0,0.1)" }}>
+                            <Typography>Địa chỉ</Typography>
+                            <InputBase sx={{ color: "black" }} value={address} onChange={handleChangeAddress}></InputBase>
+                        </Box>
                     </Box>
                     <Box sx={{ width: "100%", marginTop: "24px", padding: "6px 0px", borderBottom: "1px solid rgba(0,0,0,0.1)" }}>
                         <Typography>Email</Typography>

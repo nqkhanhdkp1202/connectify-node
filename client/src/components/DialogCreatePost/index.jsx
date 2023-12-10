@@ -2,7 +2,7 @@ import React from 'react'
 import { createPortal } from 'react-dom';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Box, Typography, InputBase } from '@mui/material';
 import { useSelector, useDispatch } from "react-redux"
-import { closeCreateDialog } from '../../store/redux/reducers/appReducer';
+import { closeCreateDialog, closeLoadDialog, openLoadDialog } from '../../store/redux/reducers/appReducer';
 import useWindowDimensions from '../../utils/useWindowDimensions';
 import ButtonRoot from '../ButtonRoot/index';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
@@ -107,6 +107,7 @@ const DialogCreatePost = ({ children }) => {
 
 
     const handleSubmit = async () => {
+        dispatch(openLoadDialog());
         const submitData = {
             title: "Sample Title",
             content: "",
@@ -137,6 +138,7 @@ const DialogCreatePost = ({ children }) => {
                             } catch (error) {
                                 console.error("Download URL Error:", error);
                                 toast.error("Error retrieving download URL");
+                                dispatch(closeLoadDialog());
                             }
                         }
                     );
@@ -154,10 +156,12 @@ const DialogCreatePost = ({ children }) => {
                     submitData.content = content;
                 }
                 dispatch(createPostReady(submitData));
+                dispatch(closeLoadDialog());
             }
         } catch (error) {
             console.error("Handle Submit Error:", error);
             toast.error("An error occurred during form submission");
+            dispatch(closeLoadDialog());
         }
     };
 

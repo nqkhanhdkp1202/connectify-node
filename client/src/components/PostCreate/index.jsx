@@ -22,7 +22,7 @@ const PostCreate = () => {
                 <input onClick={handleOpenDialog} style={{ border: "none", outline: "none", fontSize: "14px", color: "#999" }} placeholder={'Bạn đang nghĩ gì ' +  user?.fullName + ' ...' }/>
             </Box>
             <Box>
-                <ButtonRoot style={{ padding: "4px 16px" }} bgColor='#999' textColor='white' text="Đăng" />
+                <ButtonRoot onClick={handleOpenDialog} style={{ padding: "4px 16px" }} bgColor='#999' textColor='white' text="Đăng" />
             </Box>
         </Box>
     )

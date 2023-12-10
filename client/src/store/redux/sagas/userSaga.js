@@ -17,7 +17,7 @@ import {
   registerSuccess,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
-import { closeEditDialog } from "../reducers/appReducer";
+import { closeEditDialog, closeLoadDialog } from "../reducers/appReducer";
 import { push } from "connected-react-router";
 
 const userService = new UserService();
@@ -32,7 +32,7 @@ function* loginSaga(dataRequest) {
       localStorage.setItem("token", data?.token);
       toast.success("Đăng nhập thành công!");
       yield put(getUserInfoReady());
-      yield put(push("/"))
+      yield put(push("/"));
     } else {
       toast.error("Something went wrong!");
       yield put(loginFail());
@@ -128,6 +128,7 @@ function* addFriendSaga(dataRequest) {
       yield put(addFriendSuccess(res?.data));
       toast.success("Kết bạn thành công");
       yield put(getListUserReady());
+      yield put(getUserInfoReady());
     } else {
       yield put(addFriendFail());
       toast.error(res?.message);

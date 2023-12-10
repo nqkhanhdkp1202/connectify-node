@@ -33,6 +33,17 @@ class PostService {
     });
     return res;
   }
+
+  async commentPost(dataRequest) {
+    const token = localStorage.getItem("token");
+    const res = await API.post(`/post/${dataRequest?.id}/comment`, dataRequest, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token || dataRequest}`,
+      },
+    });
+    return res;
+  }
 }
 
 export default PostService;

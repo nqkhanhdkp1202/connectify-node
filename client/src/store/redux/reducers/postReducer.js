@@ -62,12 +62,34 @@ export const likePostFail = (data) => {
   };
 };
 
+export const commentPostSuccess = (data) => {
+  return {
+    type: "COMMENT_POST_SUCCESS",
+    payload: data,
+  };
+};
+
+export const commentPostReady = (data) => {
+  return {
+    type: "COMMENT_POST_READY",
+    payload: data,
+  };
+};
+
+export const commentPostFail = (data) => {
+  return {
+    type: "COMMENT_POST_FAIL",
+    payload: data,
+  };
+};
+
 const postReducer = (
   state = {
     isFetchingPost:false,
     listPost:[],
     isCreatePost: false,
-    isLikePost: false
+    isLikePost: false,
+    isCommentPost: false
   },
   action
 ) => {
@@ -126,6 +148,24 @@ const postReducer = (
       return {
         ...state,
         isLikePost:false,
+      }
+    }
+    case "COMMENT_POST_READY":{
+      return {
+        ...state,
+        isCommentPost:true,
+      }
+    }
+    case "COMMENT_POST_SUCCESS":{
+      return {
+        ...state,
+        isCommentPost:false,
+      }
+    }
+    case "COMMENT_POST_FAIL":{
+      return {
+        ...state,
+        isCommentPost:false,
       }
     }
     default:

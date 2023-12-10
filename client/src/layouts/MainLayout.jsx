@@ -6,8 +6,11 @@ import ContainerWrapper from '../components/ContainerWrapper'
 import {Box} from "@mui/material"
 import {useLocation} from "react-router-dom"
 import DialogCreatePost from "../components/DialogCreatePost"
-import DialogListUser from "../components/DialogListUser"
+import DialogListUser from "../components/DialogListFriend"
 import DialogEditProfile from "../components/DialogEditProfile"
+import LoadingScreen from '../components/LoadingScreen/index';
+import DialogListFriend from '../components/DialogListFriend'
+import DialogListLiked from '../components/DialogListLiked/index';
 
 export default function MainLayout() {
     const {pathname} = useLocation();
@@ -23,8 +26,10 @@ export default function MainLayout() {
                 pathname !== '/' && <Footer />
             }
             <DialogCreatePost />
-            <DialogListUser />
+            <DialogListFriend />
+            <DialogListLiked />
             <DialogEditProfile />
+            <LoadingScreen />
         </React.Fragment>
     )
 }

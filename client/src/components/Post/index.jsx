@@ -12,21 +12,23 @@ import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
 import { useDispatch, useSelector } from "react-redux"
-import { openUserDialog } from '../../store/redux/reducers/appReducer';
+import { openUserDialog, openLikedDialog, saveListUserRender } from '../../store/redux/reducers/appReducer';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { likePostReady } from '../../store/redux/reducers/postReducer';
 import userReducer from '../../store/redux/reducers/userReducer';
 import ImageRoot from '../ImageRoot';
+import DialogListUser from '../DialogListFriend';
 
 
 const Post = ({ author, content, title, imageUrls, likedBy, comments, createdAt, id }) => {
   const dispatch = useDispatch();
   const handleOpenListUserDialog = () => {
-    dispatch(openUserDialog());
+    dispatch(saveListUserRender({listUserRender:likedBy, titleListUser: "Lượt thích"}))
+    dispatch(openLikedDialog());
   }
   const { user } = useSelector(state => state.userReducer)
-  const [isLiked, setIsLiked] = useState(likedBy[0]?.id === user?.id);
+  const [isLiked, setIsLiked] = useState(likedBy.some(item => item?.id === user?.id));
   const [countLike, setCountLike] = useState(likedBy?.length);
   const handleLikedPost = () => {
     setIsLiked(!isLiked);
@@ -101,7 +103,7 @@ const Post = ({ author, content, title, imageUrls, likedBy, comments, createdAt,
               {
                 imageUrls?.map((e, i) => {
                   return (
-                    <ImageRoot key={i} component={"img"} image={e} sx={{ maxWidth: "40%" }}></ImageRoot>
+                    <ImageRoot key={i} component={"img"} image={e} sx={{ maxWidth: "50%" }}></ImageRoot>
                   )
                 })
               }

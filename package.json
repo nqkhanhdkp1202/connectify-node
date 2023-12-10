@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@fancyapps/ui": "^5.0.28"
+    "@fancyapps/ui": "^5.0.28",
+    "use-debounce": "^10.0.0"
   }
 }
