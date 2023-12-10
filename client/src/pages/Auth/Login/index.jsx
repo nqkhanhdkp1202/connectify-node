@@ -1,19 +1,19 @@
 import { Box, FormControl, Typography } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ButtonRoot from "../../../components/ButtonRoot";
-import authServices from "../../../service/authServices";
 import { useAuth } from "../../../store/context/AuthContext";
 import { useDispatch } from "react-redux"
 import { getUserInfoReady, loginReady } from "../../../store/redux/reducers/userReducer";
+import {useSelector} from "react-redux"
 
 function Login() {
   const usernameInput = useRef(null);
   const passwordInput = useRef(null);
   const navigate = useNavigate();
-  const { userInfo, saveUserInfo } = useAuth();
   const dispatch = useDispatch();
+  const {isLogin} = useSelector(state => state.userReducer);
   const handleLogin = async () => {
     let username = "";
     let password = "";
@@ -35,6 +35,8 @@ function Login() {
       toast.error("Oops! Something went wrong");
     }
   };
+  
+  
 
   return (
     <Box component={"div"} sx={{ backgroundImage: `url("https://source.unsplash.com/random/1920x1080/?city,night")`, width: "100vw", height: "100vh" }}>

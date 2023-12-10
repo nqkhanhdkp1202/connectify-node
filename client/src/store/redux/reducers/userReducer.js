@@ -84,10 +84,78 @@ export const getUserInfoSuccess = (data) => {
   };
 };
 
+export const getListUserReady = (data) => {
+  return {
+    type: "GET_LIST_USER_READY",
+    payload: data,
+  };
+};
+
+export const getListUserFail = (data) => {
+  return {
+    type: "GET_LIST_USER_FAIL",
+    payload: data,
+  };
+};
+
+export const getListUserSuccess = (data) => {
+  return {
+    type: "GET_LIST_USER_SUCCESS",
+    payload: data,
+  };
+};
+
+export const editProfileReady = (data) => {
+  return {
+    type: "EDIT_PROFILE_READY",
+    payload: data,
+  };
+};
+
+export const editProfileFail = (data) => {
+  return {
+    type: "EDIT_PROFILE_FAIL",
+    payload: data,
+  };
+};
+
+export const editProfileSuccess = (data) => {
+  return {
+    type: "EDIT_PROFILE_SUCCESS",
+    payload: data,
+  };
+};
+
+export const addFriendReady = (data) => {
+  return {
+    type: "ADD_FRIEND_READY",
+    payload: data,
+  };
+};
+
+export const addFriendSuccess = (data) => {
+  return {
+    type: "ADD_FRIEND_SUCCESS",
+    payload: data,
+  };
+};
+
+export const addFriendFail = (data) => {
+  return {
+    type: "ADD_FRIEND_FAIL",
+    payload: data,
+  };
+};
+
 const userReducer = (
   state = {
     token: "",
     user: {},
+    isLogin: false,
+    isFetchListUser: false,
+    listUser: [],
+    isEditProfile: false,
+    isAddFriend: false,
   },
   action
 ) => {
@@ -95,8 +163,8 @@ const userReducer = (
   switch (type) {
     case REHYDRATE: {
       const { userReducer } = payload || {};
-      const { token } = userReducer || "";
-      return { ...state, token: token || "" };
+      const { token, user } = userReducer || "";
+      return { ...state, token: token || "", user: user };
     }
     case "LOGIN_READY":
       return {
@@ -123,15 +191,7 @@ const userReducer = (
     case "GET_USER_INFO_SUCCESS":
       return {
         ...state,
-        isGetInfoUser: false,
-        uPack: payload?.uPack || null,
-        listJoinedTour: payload?.listJoinTour || [],
-        countTicket: payload?.countTicket || 0,
-        userAvatar: payload?.avatar || "",
-        isFullInfo: payload?.checkFullInfor,
-        user: {
-          ...payload.user,
-        },
+        user: { ...payload },
       };
     case "GET_USER_INFO_FAIL":
       return {
@@ -146,7 +206,7 @@ const userReducer = (
     case "REGISTER_SUCCESS":
       return {
         ...state,
-        isRegister: false,  
+        isRegister: false,
         typeVerifyOTP: "register",
       };
     case "REGISTER_FAIL":
@@ -154,49 +214,67 @@ const userReducer = (
         ...state,
         isRegister: false,
       };
-    case "REMOVE_TOKEN_USER":
-      return { ...state, tokenUser: "" };
-    case "REGISTER_SUCCESS_FULLY":
-      return { ...state, registerValue: payload };
-    case "UPDATE_PROFILE_USER":
-      return { ...state, isUpdateProfile: true };
-    case "UPDATE_PROFILE_USER_SUCCESS":
+    case "GET_LIST_USER_READY": {
       return {
         ...state,
-        isUpdateProfile: false,
-        userAvatar: payload?.avatar,
-        isFullInfo: payload?.checkFullInfor,
-        user: { ...state.user, userNickName: payload?.nickName },
+        isFetchListUser: true,
       };
-    case "UPDATE_PROFILE_USER_FAIL":
-      return { ...state, isUpdateProfile: false };
-    case "LOG_OUT_READY":
+    }
+    case "GET_LIST_USER_SUCCESS": {
       return {
         ...state,
-        isLogout: true,
+        isFetchListUser: false,
+        listUser: payload,
       };
-    case "LOG_OUT_SUCCESS":
+    }
+    case "GET_LIST_USER_FAIL": {
       return {
         ...state,
-        isLogout: false,
+        isFetchListUser: false,
+      };
+    }
+    case "EDIT_PROFILE_READY": {
+      return {
+        ...state,
+        isEditProfile: true,
+      };
+    }
+    case "EDIT_PROFILE_SUCCESS": {
+      return {
+        ...state,
+        isEditProfile: false,
+      };
+    }
+    case "EDIT_PROFILE_FAIL": {
+      return {
+        ...state,
+        isEditProfile: false,
+      };
+    }
+    case "ADD_FRIEND_READY": {
+      return {
+        ...state,
+        isAddFriend: true,
+      };
+    }
+    case "ADD_FRIEND_SUCCESS": {
+      return {
+        ...state,
+        isAddFriend: false,
+      };
+    }
+    case "ADD_FRIEND_FAIL": {
+      return {
+        ...state,
+        isAddFriend: false,
+      };
+    }
+    case "LOG_OUT_SUCCESS": {
+      return {
+        ...state,
         user: {},
-        uPack: null,
-        listJoinedTour: [],
-        countTicket: 0,
-        tokenUser: "",
-        userAvatar: "",
       };
-    case "LOG_OUT_FAIL":
-      return {
-        ...state,
-        isLogout: false,
-      };
-    case "GET_MY_INFOR":
-      return { ...state, isGetMyInfo: true };
-    case "GET_MY_INFOR_SUCCESS":
-      return { ...state, isGetMyInfo: false };
-    case "GET_MY_INFOR_FAIL":
-      return { ...state, isGetMyInfo: false };
+    }
     default:
       return state;
   }
