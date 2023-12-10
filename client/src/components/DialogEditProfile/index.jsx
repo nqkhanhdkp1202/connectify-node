@@ -146,7 +146,7 @@ const DialogEditProfile = ({ children }) => {
                     <Box sx={{ position: "relative", marginTop: "16px" }}>
                         <ButtonRoot style={{ width: "fit-content", outline: "1px solid rgba(0,0,0,0.1)", padding: "4px 32px", fontSize: "15px", textTransform: "unset", borderRadius: "24px", background: "white", color: "black" }} text="Tải ảnh lên">
                         </ButtonRoot>
-                        <input onChange={handleChangeFile} type="file" style={{ position: "absolute", top: 0, left: 0, right: 0, opacity: 0, cursor: "pointer" }} />
+                        <input id="avatar" name="avatar" accept="image/png, image/jpeg, gif" onChange={handleChangeFile} type="file" style={{ position: "absolute", top: 0, left: 0, right: 0, opacity: 0, cursor: "pointer" }} />
                     </Box>
                     <Box sx={{display:"flex", justifyContent:"space-between", width:"100%"}}>
                     <Box sx={{ width: "48%", marginTop: "24px", borderBottom: "1px solid rgba(0,0,0,0.1)" }}>

@@ -8,12 +8,15 @@ import { getListUserReady } from '../../store/redux/reducers/userReducer';
 const Search = () => {
   const { listUser, user } = useSelector(state => state.userReducer);
   const [focus, setFocus] = useState(false);
-  console.log("Re-render");
+  const [filterArray, setFilterArray] = useState([]);
+  const tempArray = listUser?.filter(item => item?.id);
   const dispatch = useDispatch();
 
+  console.log(filterArray);
   useEffect(() => {
     dispatch(getListUserReady());
-  }, [])
+  }, [dispatch]);
+
 
 
   return (

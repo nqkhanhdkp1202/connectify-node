@@ -62,6 +62,9 @@ const DialogCreatePost = ({ children }) => {
 
     const handleClose = () => {
         dispatch(closeCreateDialog());
+        setPreview(null);
+        setImage(null);
+        setContent(null);
     };
     const handleChangeContent = (e) => {
         setContent(e.target.value);
@@ -73,18 +76,18 @@ const DialogCreatePost = ({ children }) => {
             // Check each file's size
             for (const file of selectedFiles) {
                 const fileSize = file.size / 1024 / 1024; // in MB
-    
+
                 if (fileSize > 2) {
                     toast.error('File size exceeds 2MB. Please choose smaller files.');
                     setImage(null);
                     return; // Stop processing if any file is too large
                 }
             }
-    
+
             // Set the images array
             const imageArray = Array.from(selectedFiles);
             setImage(imageArray);
-    
+
             // Read and set the preview for each file
             const promises = imageArray.map((file) => {
                 return new Promise((resolve) => {
@@ -95,25 +98,55 @@ const DialogCreatePost = ({ children }) => {
                     reader.readAsDataURL(file);
                 });
             });
-    
+
             Promise.all(promises).then((results) => {
                 setPreview(results);
             });
         }
     };
 
-    
+
     const handleSubmit = async () => {
         const submitData = {
-            title:"Sample Title",
-            content:"",
-            imageUrls:[],
+            title: "Sample Title",
+            content: "",
+            imageUrls: [],
         };
         try {
-            if (image !== null) {
-            for(const file of image){
-                console.log(file);
-            }
+            if (image?.length > 0) {
+                image.forEach(element => {
+                    const imageRef = ref(storage, `/posts/${element.name}`);
+                    const uploadTask = uploadBytesResumable(imageRef, element);
+
+                    uploadTask?.on(
+                        "state_changed",
+                        (snapshot) => {
+                            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                            setPercent(progress);
+                        },
+                        (error) => {
+                            console.error("Upload Error:", error);
+                            toast.error(error.message || "An error occurred during upload");
+                        },
+                        async () => {
+                            try {
+                                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                                if (downloadURL) {
+                                    submitData.imageUrls = [...submitData.imageUrls, downloadURL];
+                                }
+                            } catch (error) {
+                                console.error("Download URL Error:", error);
+                                toast.error("Error retrieving download URL");
+                            }
+                        }
+                    );
+                });
+                setTimeout(() => {
+                    if (content) {
+                        submitData.content = content;
+                    }
+                    dispatch(createPostReady(submitData));
+                }, 3000)
             }
             else {
 
@@ -149,15 +182,15 @@ const DialogCreatePost = ({ children }) => {
                             <TextareaAutosize onChange={handleChangeContent} placeholder='Hãy bắt đầu viết gì đó...' sx={{ marginTop: "16px", width: "100%" }} />
                             <Box sx={{ margin: "12px 0px" }}>
                                 {
-                                    preview?.length > 2 ? <Carousel listImage={preview} /> : <Box sx={{display:"flex", alignItems:"center"}}>
-                                    {
-                                      preview?.map((e,i) => {
-                                        return (
-                                          <ImageRoot key={i} image={e} style={{maxWidth:"30%"}}></ImageRoot>
-                                        )
-                                      })
-                                    }
-                                  </Box> }
+                                    preview?.length > 2 ? <Carousel listImage={preview} /> : <Box sx={{ display: "flex", alignItems: "center" }}>
+                                        {
+                                            preview?.map((e, i) => {
+                                                return (
+                                                    <ImageRoot key={i} image={e} style={{ maxWidth: "30%" }}></ImageRoot>
+                                                )
+                                            })
+                                        }
+                                    </Box>}
                             </Box>
                         </Box>
                     </Box>

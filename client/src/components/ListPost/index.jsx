@@ -8,7 +8,7 @@ const ListPost = ({ listPost }) => {
     <>
       {
         listPost?.length > 0 ? listPost?.map((e, i) => (
-          <Post key={i} author={e?.author} content={e?.content} comments={e?.comments} likedBy={e?.likedBy} createdAt={e?.createdAt} imageUrls={e?.imageUrls} />
+          <Post key={i} author={e?.author} content={e?.content} comments={e?.comments} likedBy={e?.likedBy} createdAt={e?.createdAt} imageUrls={e?.imageUrls} id={e?.id} />
         )) : <Box sx={{ width: "100%", height: "100%", marginTop:"36px" }}>
           <ListEmpty />
         </Box>

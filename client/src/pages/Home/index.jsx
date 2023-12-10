@@ -11,12 +11,12 @@ const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getListPostReady());    
-  },[])
+  },[dispatch])
 
   return (
     <>
       <PostCreate />
-      <ListPost listPost={listPost?.reverse()} />
+      <ListPost listPost={listPost} />
     </>
   );
 };

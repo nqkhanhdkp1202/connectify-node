@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import PostService from "../services/postService";
-import { createPostFail, createPostSuccess, getListPostFail, getListPostSuccess } from "../reducers/postReducer";
+import { createPostFail, createPostSuccess, getListPostFail, getListPostSuccess, likePostSuccess } from "../reducers/postReducer";
 import { toast } from 'react-toastify';
 const postService = new PostService();
 
@@ -9,7 +9,7 @@ function* getListPost(dataRequest) {
     const { payload } = dataRequest;
     const res = yield call(postService.getAllPost, payload);
     if (res.status === 200) {
-      yield put(getListPostSuccess(res?.data));
+      yield put(getListPostSuccess(res?.data?.reverse()));
     } else {
       yield put(getListPostFail());
     }
@@ -36,8 +36,24 @@ function* createPostSaga(dataRequest) {
   }
 }
 
+function* likePostSaga(dataRequest) {
+  try {
+    const { payload } = dataRequest;
+    const res = yield call(postService.likePost, payload);
+    if (res.status === 200) {
+      yield put(likePostSuccess(res?.data));
+    } else {
+      yield put(likePostFail());
+    }
+  } catch (error) {
+    toast.error(error);
+    yield put(likePostFail());
+  }
+}
+
 function* postSaga() {
   yield takeEvery("GET_LIST_POST_READY", getListPost);
   yield takeEvery("CREATE_POST_READY", createPostSaga);
+  yield takeEvery("LIKE_POST_READY", likePostSaga);
 }
 export default postSaga;

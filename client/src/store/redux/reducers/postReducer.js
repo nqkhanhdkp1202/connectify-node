@@ -41,12 +41,33 @@ export const createPostFail = (data) => {
   };
 };
 
+export const likePostSuccess = (data) => {
+  return {
+    type: "LIKE_POST_SUCCESS",
+    payload: data,
+  };
+};
+
+export const likePostReady = (data) => {
+  return {
+    type: "LIKE_POST_READY",
+    payload: data,
+  };
+};
+
+export const likePostFail = (data) => {
+  return {
+    type: "LIKE_POST_FAIL",
+    payload: data,
+  };
+};
 
 const postReducer = (
   state = {
     isFetchingPost:false,
     listPost:[],
-    isCreatePost: false
+    isCreatePost: false,
+    isLikePost: false
   },
   action
 ) => {
@@ -87,6 +108,24 @@ const postReducer = (
       return {
         ...state,
         isCreatePost:false,
+      }
+    }
+    case "LIKE_POST_READY":{
+      return {
+        ...state,
+        isLikePost:true,
+      }
+    }
+    case "LIKE_POST_SUCCESS":{
+      return {
+        ...state,
+        isLikePost:false,
+      }
+    }
+    case "LIKE_POST_FAIL":{
+      return {
+        ...state,
+        isLikePost:false,
       }
     }
     default:

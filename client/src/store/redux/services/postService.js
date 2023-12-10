@@ -22,6 +22,17 @@ class PostService {
     });
     return res;
   }
+
+  async likePost(dataRequest) {
+    const token = localStorage.getItem("token");
+    const res = await API.post(`/post/${dataRequest?.id}/like`, dataRequest, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token || dataRequest}`,
+      },
+    });
+    return res;
+  }
 }
 
 export default PostService;
