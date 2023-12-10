@@ -29,7 +29,12 @@ const Post = ({ author, content, title, imageUrls, likedBy, comments, createdAt,
   const [countLike, setCountLike] = useState(likedBy?.length);
   const handleLikedPost = () => {
     setIsLiked(!isLiked);
-    setCountLike((prevState) => prevState + 1);
+    if (!isLiked) {
+      setCountLike(prevState => prevState + 1)
+    }
+    else {
+      setCountLike(prevState => prevState - 1)
+    }
     dispatch(likePostReady({ id }))
   }
 
