@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { likePostReady } from '../../store/redux/reducers/postReducer';
 import userReducer from '../../store/redux/reducers/userReducer';
+import ImageRoot from '../ImageRoot';
 
 
 const Post = ({ author, content, title, imageUrls, likedBy, comments, createdAt, id }) => {
@@ -100,7 +101,7 @@ const Post = ({ author, content, title, imageUrls, likedBy, comments, createdAt,
               {
                 imageUrls?.map((e, i) => {
                   return (
-                    <Box key={i} component={"img"} src={e} sx={{ maxWidth: "40%" }}></Box>
+                    <ImageRoot key={i} component={"img"} image={e} sx={{ maxWidth: "40%" }}></ImageRoot>
                   )
                 })
               }
