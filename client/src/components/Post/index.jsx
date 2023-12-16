@@ -3,28 +3,22 @@ import { Box, Typography } from "@mui/material"
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Carousel from '../Carousel';
 import DefaultUser from "../../assets/images/default-user.png"
-import Image2 from "../../assets/images/image2.jpg"
-import Image3 from "../../assets/images/image3.jpg"
-import Image4 from "../../assets/images/image4.jpg"
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
 import { useDispatch, useSelector } from "react-redux"
-import { openUserDialog, openLikedDialog, saveListUserRender } from '../../store/redux/reducers/appReducer';
+import { openLikedDialog, saveListUserRender, openCommentDialog, saveListComment } from '../../store/redux/reducers/appReducer';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { likePostReady } from '../../store/redux/reducers/postReducer';
-import userReducer from '../../store/redux/reducers/userReducer';
 import ImageRoot from '../ImageRoot';
-import DialogListUser from '../DialogListFriend';
-
 
 const Post = ({ author, content, title, imageUrls, likedBy, comments, createdAt, id }) => {
   const dispatch = useDispatch();
   const handleOpenListUserDialog = () => {
-    dispatch(saveListUserRender({listUserRender:likedBy, titleListUser: "Lượt thích"}))
+    dispatch(saveListUserRender({ listUserRender: likedBy, titleListUser: "Lượt thích" }))
     dispatch(openLikedDialog());
   }
   const { user } = useSelector(state => state.userReducer)
@@ -39,6 +33,13 @@ const Post = ({ author, content, title, imageUrls, likedBy, comments, createdAt,
       setCountLike(prevState => prevState - 1)
     }
     dispatch(likePostReady({ id }))
+  }
+  const handleOpenCommentDialog = () => {
+    dispatch(saveListComment({
+      listComment: comments,
+      idPost: id,
+    }))
+    dispatch(openCommentDialog());
   }
 
   const [timeElapsed, setTimeElapsed] = useState('');
@@ -103,7 +104,7 @@ const Post = ({ author, content, title, imageUrls, likedBy, comments, createdAt,
               {
                 imageUrls?.map((e, i) => {
                   return (
-                    <ImageRoot key={i} component={"img"} image={e} sx={{ maxWidth: "50%" }}></ImageRoot>
+                    <ImageRoot key={i} component={"img"} image={e} style={{ width: "70%", maxWidth: "100%" }}></ImageRoot>
                   )
                 })
               }
@@ -115,7 +116,7 @@ const Post = ({ author, content, title, imageUrls, likedBy, comments, createdAt,
 
             isLiked ? <FavoriteIcon onClick={handleLikedPost} sx={{ fontSize: "22px", cursor: "pointer", color: "#fe3040" }} /> : <FavoriteBorderIcon onClick={handleLikedPost} sx={{ fontSize: "22px", cursor: "pointer" }} />
           }
-          <ModeCommentOutlinedIcon sx={{ fontSize: "22px", cursor: "pointer" }} />
+          <ModeCommentOutlinedIcon onClick={handleOpenCommentDialog} sx={{ fontSize: "22px", cursor: "pointer" }} />
           <AutorenewOutlinedIcon sx={{ fontSize: "22px", cursor: "pointer" }} />
           <IosShareOutlinedIcon sx={{ fontSize: "22px", cursor: "pointer" }} />
         </Box>
@@ -125,7 +126,11 @@ const Post = ({ author, content, title, imageUrls, likedBy, comments, createdAt,
               textDecoration: "underline"
             }
           }}>{countLike} lượt thích</Typography>
-          <Typography sx={{ fontSize: "15px", fontWeight: "400", color: "#999" }}>{comments?.length} bình luận</Typography>
+          <Typography onClick={handleOpenCommentDialog} sx={{
+            ":hover": {
+              textDecoration: "underline"
+            }, fontSize: "15px", fontWeight: "400", color: "#999", cursor: "pointer"
+          }}>{comments?.length} bình luận</Typography>
         </Box>
       </Box>
     </Box>

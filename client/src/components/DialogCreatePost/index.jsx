@@ -190,7 +190,7 @@ const DialogCreatePost = ({ children }) => {
                                         {
                                             preview?.map((e, i) => {
                                                 return (
-                                                    <ImageRoot key={i} image={e} style={{ maxWidth: "30%" }}></ImageRoot>
+                                                    <ImageRoot key={i} image={e} style={{ maxWidth: "100%" }}></ImageRoot>
                                                 )
                                             })
                                         }

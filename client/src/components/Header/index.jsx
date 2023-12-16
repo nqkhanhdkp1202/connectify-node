@@ -19,6 +19,7 @@ import Divider from '@mui/material/Divider';
 import { useDispatch } from "react-redux"
 import { openCreateDialog } from '../../store/redux/reducers/appReducer';
 import { logoutReady } from '../../store/redux/reducers/userReducer';
+import useWindowDimensions from '../../utils/useWindowDimensions';
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -26,6 +27,7 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const openDropdown = Boolean(anchorEl);
   const dispatch = useDispatch();
+  const {width} = useWindowDimensions();
   const handleClose = () => {
     setAnchorEl(null);
   }
@@ -80,12 +82,14 @@ const Header = () => {
   }
 
   return (
-    <Box component={"div"} spacing={3} className="header" sx={{ height: "80px", padding: "6px 120px", display: "flex", alignItems: "center", position: "fixed", top: 0, left: 0, right: 0, backgroundColor: "rgba(255,255,255,0.9)", zIndex: 900 }}>
-      <Grid item xs sx={{ padding: "0px" }}>
+    <Box component={"div"} spacing={3} className="header" sx={{ height: "80px", padding: width < 576 ? "" : "6px 120px", display: "flex", alignItems: "center", position: "fixed", top: 0, left: 0, right: 0, backgroundColor: "rgba(255,255,255,0.9)", zIndex: 900 }}>
+      {
+        width < 576 ?<></> :       <Grid item xs sx={{ padding: "0px" }}>
         <Link to={"/"}>
           <Box component={"img"} src={Logo} sx={{ width: "50%", height: "auto", objectFit: "cover" }}></Box>
         </Link>
       </Grid>
+      }
       <Grid item xs={6} sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", padding: "0px" }}>
         <Box onClick={() => navigate("/")} sx={{ padding: "20px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
           {
@@ -97,14 +101,18 @@ const Header = () => {
             pathname.includes("/search") ? <SearchIcon sx={{ fontSize: "32px", color: "black" }} /> : <SearchIcon sx={{ fontSize: "32px", color: "#999" }} />
           }
         </Box>
-        <Box onClick={handleOpenDialog} sx={{ padding: "20px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
+        {
+          width <576 ? <></> :        <Box onClick={handleOpenDialog} sx={{ padding: "20px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
           <EditNoteIcon sx={{ fontSize: "32px", color: "#999" }} />
         </Box>
-        <Box onClick={() => navigate("/activity")} sx={{ padding: "20px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
+        }
+        {
+          width < 576 ? <></> :<Box onClick={() => navigate("/activity")} sx={{ padding: "20px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
           {
             pathname.includes("/activity") ? <NotificationsActiveIcon sx={{ fontSize: "32px", color: "black" }} /> : <NotificationsActiveOutlinedIcon sx={{ fontSize: "32px", color: "#999" }} />
           }
         </Box>
+        }
         <Box onClick={() => navigate("/profile")} sx={{ padding: "20px 28px", transition: ".3s ease", borderRadius: "8px", cursor: "pointer", ":hover": { backgroundColor: "#f2f2f2" } }}>
           {
             pathname.includes("/profile") ? <PersonIcon sx={{ fontSize: "32px", color: "black" }} /> : <PersonOutlineOutlinedIcon sx={{ fontSize: "32px", color: "#999" }} />
@@ -112,7 +120,7 @@ const Header = () => {
 
         </Box>
       </Grid>
-      <Grid item xs sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", padding: "0px" }}>
+      <Grid item xs sx={{ display: "flex", alignItems: "center", justifyContent: width < 576 ? "center" : "flex-end", padding: "0px" }}>
         <Box sx={{ position: "relative" }}>
           <Box onClick={handleClick} aria-controls={openDropdown ? 'demo-positioned-menu' : undefined}
             aria-haspopup="true"

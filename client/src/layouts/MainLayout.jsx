@@ -11,6 +11,7 @@ import DialogEditProfile from "../components/DialogEditProfile"
 import LoadingScreen from '../components/LoadingScreen/index';
 import DialogListFriend from '../components/DialogListFriend'
 import DialogListLiked from '../components/DialogListLiked/index';
+import DialogComment from '../components/DialogComment'
 
 export default function MainLayout() {
     const {pathname} = useLocation();
@@ -29,6 +30,7 @@ export default function MainLayout() {
             <DialogListFriend />
             <DialogListLiked />
             <DialogEditProfile />
+            <DialogComment />
             <LoadingScreen />
         </React.Fragment>
     )

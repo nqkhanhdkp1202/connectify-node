@@ -127,7 +127,6 @@ function* addFriendSaga(dataRequest) {
     if (status === 200 || status === 201) {
       yield put(addFriendSuccess(res?.data));
       toast.success("Kết bạn thành công");
-      yield put(getListUserReady());
       yield put(getUserInfoReady());
     } else {
       yield put(addFriendFail());

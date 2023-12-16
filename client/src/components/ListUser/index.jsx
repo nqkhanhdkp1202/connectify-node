@@ -6,16 +6,17 @@ import { useLocation } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { addFriendReady, getListUserReady, getUserInfoReady } from '../../store/redux/reducers/userReducer';
 import ListEmpty from '../ListEmpty'
+import useWindowDimensions from '../../utils/useWindowDimensions'
 
 const ListUser = ({ listData }) => {
     const { listUser, user } = useSelector(state => state.userReducer);
     const [infoUser, setInfoUser] = useState({});
     const [listTemp, setListTemp] = useState([]);
     useEffect(() => {
-        if(listUser){
-        setListTemp(listUser);
+        if (listUser) {
+            setListTemp(listUser);
         }
-    },[listUser])
+    }, [listUser])
     const dispatch = useDispatch();
     useEffect(() => {
         if (user) {
@@ -26,13 +27,11 @@ const ListUser = ({ listData }) => {
     const User = ({ avatar, email, fullName, id }) => {
         const me = id === infoUser?.id;
         const [isAdding, setIsAdding] = useState(false);
+        const { width } = useWindowDimensions();
         const friend = infoUser?.friends?.some(item => item?.id === id);
+        const {pathname} = useLocation();
         const handleAddFriend = (id) => {
-            setIsAdding(true);
             dispatch(addFriendReady({ friendId: id }));
-            dispatch(getUserInfoReady());
-            dispatch(getListUserReady());
-            window.location.reload();
         }
         return (
             <>
@@ -47,7 +46,11 @@ const ListUser = ({ listData }) => {
                                         <Typography sx={{ fontSize: "15px", fontWeight: "400", lineHeight: "21px", color: "#999" }}>{email ? email : "Default Username"}</Typography>
                                     </Box>
                                     {
-                                        !me && <ButtonRoot onClick={() => handleAddFriend(id)} disabled={friend || isAdding} style={{ fontSize: "12px !important", padding: "0px 16px !important", fontWeight: "600", border: "1px solid rgba(0,0,0,0.1)", textTransform: "unset", lineHeight: "0px !important", fontWeight: "600", borderRadius: "16px" }} bgColor='white' textColor='black' text={friend || isAdding ? "Bạn bè" : "Thêm bạn"}></ButtonRoot>
+                                        width < 576 ?
+                                            !me && <ButtonRoot onClick={() => handleAddFriend(id)} disabled={friend || isAdding} style={{ fontSize: "12px !important", padding: "0px 16px !important", fontWeight: "600", border: "1px solid rgba(0,0,0,0.1)", textTransform: "unset", lineHeight: "0px !important", fontWeight: "600", borderRadius: "16px" }} bgColor='white' textColor='black' text={friend || isAdding ? "Bạn" : "Thêm"}></ButtonRoot>
+                                            :
+                                            !me && <ButtonRoot onClick={() => handleAddFriend(id)} disabled={friend || isAdding} style={{ fontSize: "12px !important", padding: "0px 16px !important", fontWeight: "600", border: "1px solid rgba(0,0,0,0.1)", textTransform: "unset", lineHeight: "0px !important", fontWeight: "600", borderRadius: "16px" }} bgColor='white' textColor='black' text={friend || isAdding ? "Bạn bè" : "Thêm bạn"}></ButtonRoot>
+                                            
                                     }
                                 </Box>
                                 {

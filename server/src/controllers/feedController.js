@@ -90,7 +90,6 @@ exports.getPost = async (req, res, next) => {
 };
 
 exports.updatePost = async (req, res, next) => {
-  console.log("updatePost");
   const postId = req.params.postId;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -170,6 +169,5 @@ exports.deletePost = async (req, res, next) => {
 
 const clearImage = (filePath) => {
   filePath = path.join(__dirname, "..", filePath);
-  console.log(filePath);
   fs.unlink(filePath, (err) => console.log(err));
 };

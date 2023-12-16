@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import PostService from "../services/postService";
-import { createPostFail, createPostSuccess, getListPostFail, getListPostSuccess, likePostSuccess } from "../reducers/postReducer";
+import { commentPostFail, commentPostSuccess, createPostFail, createPostSuccess, getListPostFail, getListPostReady, getListPostSuccess, likePostSuccess } from "../reducers/postReducer";
 import { toast } from 'react-toastify';
 const postService = new PostService();
 
@@ -51,9 +51,28 @@ function* likePostSaga(dataRequest) {
   }
 }
 
+function* commentPostSaga(dataRequest) {
+
+  try {
+    const { payload } = dataRequest;
+    const res = yield call(postService.commentPost, payload);
+    if (res.status === 200) {
+      yield put(commentPostSuccess(res?.data));
+      toast.success("Thêm bình luận thành công !");
+      window.location.reload();
+    } else {
+      yield put(commentPostFail());
+    }
+  } catch (error) {
+    toast.error(error);
+    yield put(commentPostFail());
+  }
+}
+
 function* postSaga() {
   yield takeEvery("GET_LIST_POST_READY", getListPost);
   yield takeEvery("CREATE_POST_READY", createPostSaga);
   yield takeEvery("LIKE_POST_READY", likePostSaga);
+  yield takeEvery("COMMENT_POST_READY", commentPostSaga);
 }
 export default postSaga;

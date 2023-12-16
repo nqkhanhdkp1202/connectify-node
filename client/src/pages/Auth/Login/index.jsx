@@ -6,14 +6,17 @@ import ButtonRoot from "../../../components/ButtonRoot";
 import { useAuth } from "../../../store/context/AuthContext";
 import { useDispatch } from "react-redux"
 import { getUserInfoReady, loginReady } from "../../../store/redux/reducers/userReducer";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux"
+import Logo from "../../../assets/images/logo.png"
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 function Login() {
   const usernameInput = useRef(null);
   const passwordInput = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {isLogin} = useSelector(state => state.userReducer);
+  const { width } = useWindowDimensions();
+  const { isLogin } = useSelector(state => state.userReducer);
   const handleLogin = async () => {
     let username = "";
     let password = "";
@@ -35,14 +38,16 @@ function Login() {
       toast.error("Oops! Something went wrong");
     }
   };
-  
-  
+
+
 
   return (
     <Box component={"div"} sx={{ backgroundImage: `url("https://source.unsplash.com/random/1920x1080/?city,night")`, width: "100vw", height: "100vh" }}>
-      <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", textAlign: "center", backgroundColor: "rgba(255,255,255,0.8)", padding: "36px", borderRadius: "16px" }}>
-        <Typography variant="h2" sx={{ fontSize: "42px", fontWeight: "800", letterSpacing: "2px" }}>connectify</Typography>
-        <Typography variant="caption" sx={{ fontSize: "24px", fontWeight: "500" }}>Mạng xã hội với hơn 1 triệu lượt truy cập mỗi ngày</Typography>
+      <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", textAlign: "center", backgroundColor: "rgba(255,255,255,0.8)", padding: "36px", borderRadius: "16px", width: width < 576 ? "100%" : "fit-content", height: width < 576 ? "100%" : "fit-content" }}>
+        <Box component={"img"} src={Logo} variant="h2" sx={{ maxWidth: "30%" }}></Box>
+        <Box>
+          <Typography variant="caption" sx={{ fontSize: "24px", fontWeight: "500" }}>Mạng xã hội với hàng trăm lượt truy cập mỗi ngày</Typography>
+        </Box>
         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: 'center', alignItems: "center", gap: "24px" }}>
           <Box sx={{ marginTop: "24px" }}>
             <Typography variant="body1" sx={{ fontSize: "16px", fontWeight: "800" }}>Đăng nhập tài khoản connectify</Typography>

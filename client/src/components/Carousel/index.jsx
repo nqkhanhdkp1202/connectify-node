@@ -15,7 +15,7 @@ export default function Carousel({listImage}) {
     <Slider {...settings}>
         {
             listImage && listImage?.map((e,i) => (
-                <ImageRoot key={i} image={e}/>
+                <ImageRoot key={i} image={e} style={{width:"50%" ,maxWidth:"100%", marginRight:"4px"}}/>
             )) 
         }
     </Slider>

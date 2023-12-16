@@ -8,7 +8,13 @@ import {useSelector} from "react-redux"
 
 const Home = () => {
   const {listPost} = useSelector(state => state.postReducer);
+  const [list, setList] = useState([])
   const dispatch = useDispatch();
+  useEffect(() => {
+    if(listPost){
+      setList(listPost)
+    }
+  }, [listPost])
   useEffect(() => {
     dispatch(getListPostReady());    
   },[dispatch])
@@ -16,7 +22,7 @@ const Home = () => {
   return (
     <>
       <PostCreate />
-      <ListPost listPost={listPost} />
+      <ListPost listPost={list} />
     </>
   );
 };

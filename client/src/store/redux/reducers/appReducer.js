@@ -70,19 +70,48 @@ export const closeLikedDialog = (data) => {
   };
 };
 
+export const openCommentDialog = (data) => {
+  return {
+    type: "OPEN_COMMENT_DIALOG",
+    payload: data,
+  };
+};
+
+export const closeCommentDialog = (data) => {
+  return {
+    type: "CLOSE_COMMENT_DIALOG",
+    payload: data,
+  };
+};
+
+export const saveListComment = (data) => {
+  return {
+    type: "SAVE_LIST_COMMENT",
+    payload: data,
+  };
+};
+
+export const clearListComment = (data) => {
+  return {
+    type: "CLEAR_LIST_COMMENT",
+    payload: data,
+  };
+};
+
+
 export const saveListUserRender = (data) => {
-    return {
-      type: "SAVE_LIST_USER_RENDER",
-      payload: data,
-    };
+  return {
+    type: "SAVE_LIST_USER_RENDER",
+    payload: data,
   };
-  
-  export const clearListUserRender = (data) => {
-    return {
-      type: "CLEAR_LIST_USER_RENDER",
-      payload: data,
-    };
+};
+
+export const clearListUserRender = (data) => {
+  return {
+    type: "CLEAR_LIST_USER_RENDER",
+    payload: data,
   };
+};
 
 const appReducer = (
   state = {
@@ -91,8 +120,11 @@ const appReducer = (
     isOpenEditDialog: false,
     isOpenLoadDialog: false,
     isOpenLikedDialog: false,
-    titleListUser:"",
-    listUserRender:[]
+    isOpenCommentDialog: false,
+    listComment: [],
+    titleListUser: "",
+    listUserRender: [],
+    idPost: "",
   },
   action
 ) => {
@@ -161,20 +193,46 @@ const appReducer = (
         isOpenLikedDialog: false,
       };
     }
+    case "OPEN_COMMENT_DIALOG": {
+      return {
+        ...state,
+        isOpenCommentDialog: true,
+      };
+    }
+    case "CLOSE_COMMENT_DIALOG": {
+      return {
+        ...state,
+        isOpenCommentDialog: false,
+      };
+    }
+    case "SAVE_LIST_COMMENT": {
+      return {
+        ...state,
+        listComment: payload?.listComment,
+        idPost: payload?.idPost,
+      };
+    }
+    case "CLEAR_LIST_COMMENT": {
+      return {
+        ...state,
+        listComment: [],
+        idPost: ""
+      };
+    }
     case "SAVE_LIST_USER_RENDER": {
-        return {
-          ...state,
-          listUserRender: [...payload?.listUserRender],
-          titleListUser: payload?.titleListUser
-        };
-      }
-      case "CLEAR_LIST_USER_RENDER": {
-        return {
-          ...state,
-          listUserRender: [],
-          titleListUser: "",
-        };
-      }
+      return {
+        ...state,
+        listUserRender: [...payload?.listUserRender],
+        titleListUser: payload?.titleListUser,
+      };
+    }
+    case "CLEAR_LIST_USER_RENDER": {
+      return {
+        ...state,
+        listUserRender: [],
+        titleListUser: "",
+      };
+    }
     default:
       return state;
   }

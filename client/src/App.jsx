@@ -16,9 +16,12 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { PrivateRouteComponent } from "./components/PrivateRouteComponent"
+import useWindowDimensions from "./utils/useWindowDimensions";
 
 
 function App() {
+  const {width} = useWindowDimensions();
+
   const theme = createTheme({
     typography: {
       fontFamily: [
@@ -34,6 +37,7 @@ function App() {
   }, [pathname]);
 
 
+
   return (
     <Provider store={store}>
       <AuthProvider>
@@ -45,7 +49,7 @@ function App() {
             closeOnClick
             rtl={false}
             theme="light"
-            style={{ width: "max-content" }}
+            style={{ width: width < 576 ? "100vw" : "max-content" }}
           />
           <Routes>
             <Route
